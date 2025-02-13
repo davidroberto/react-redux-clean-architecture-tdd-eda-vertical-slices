@@ -1,0 +1,86 @@
+import {useEffect, useState} from "react";
+import * as ImagePicker from "expo-image-picker";
+import {useLocalSearchParams, useRouter} from "expo-router";
+import {useDispatch, useSelector} from "react-redux";
+import {RootState} from "@/src/shared/application/root.store";
+import {getExerciceByIdUseCase} from "@/src/exercice/features/get-exercice-by-id/get-exercice-by-id.usecase";
+import {updateExerciceUseCase} from "@/src/exercice/features/update-exercice/update-exercice.usecase";
+
+export const useUpdateExerciceViewModel = (): {
+    title: string;
+    setTitle: (title: string) => void;
+    description: string;
+    setDescription: (description: string) => void;
+    image: string | null;
+    setImage: (image: string | null) => void;
+    youtubeVideoUrl: string;
+    setYoutubeVideoUrl: (youtubeVideoUrl: string) => void;
+    handleImagePick: () => void;
+    handleSubmit: () => void;
+} => {
+    const {id} = useLocalSearchParams();
+    const [title, setTitle] = useState("");
+    const [description, setDescription] = useState("");
+    const [image, setImage] = useState<string | null>(null);
+    const [youtubeVideoUrl, setYoutubeVideoUrl] = useState("");
+
+    const currentExercice = useSelector(
+        (state: RootState) => state.exercices.current.exercice,
+    );
+
+    const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch(getExerciceByIdUseCase(id));
+    }, [id]);
+
+    useEffect(() => {
+        if (currentExercice) {
+            setTitle(currentExercice.title);
+            setDescription(currentExercice.description);
+            setImage(currentExercice.image);
+            setYoutubeVideoUrl(currentExercice.youtubeVideoUrl);
+        }
+    }, [currentExercice]);
+
+    const handleImagePick = async () => {
+        let result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.Images,
+            allowsEditing: true,
+            aspect: [4, 3],
+            quality: 1,
+        });
+
+        if (!result.canceled) {
+            console.log(result);
+            // setImage(result.uri); // Assurez-vous d'utiliser le bon format d'image
+        }
+    };
+
+    const router = useRouter();
+
+    const handleSubmit = async () => {
+        dispatch(
+            updateExerciceUseCase(id, {
+                title,
+                description,
+                image,
+                youtubeVideoUrl,
+            }),
+        );
+
+        router.push("exercices");
+    };
+
+    return {
+        title,
+        setTitle,
+        description,
+        setDescription,
+        image,
+        setImage,
+        youtubeVideoUrl,
+        setYoutubeVideoUrl,
+        handleImagePick,
+        handleSubmit,
+    };
+};
