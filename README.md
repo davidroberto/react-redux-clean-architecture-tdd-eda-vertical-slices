@@ -4,7 +4,7 @@
 
 ### Issues in react with "classic" react state management, without clean architecture:
 - Feeling like I'm hacking things together to manage my components' state
-- Struggling to decouple myself enough from the UI
+- Struggling to decouple enough from the UI
 - Creating/moving hooks and "services" here and there
 - Failing to do TDD or test properly (too much coupling, too fragile, little logic to test...) and struggling to give value to those tests
 - Using X or Y state management libraries/APIs
@@ -28,7 +28,8 @@
   - Use case tests
   - State transition diagram (state machine diagram)
   - Events (Redux actions created with createAction)
-  - The command, if the use case is a command
+  - The command, if the use case is a command handler
+  - A service validor, if necessary (invariant is mostly handled by the backend)
 - Shared between features:
   - The repository: implementation + interface (overkill to create a repository + repository interface per use case, manage its injection, etc.)
   - The domain model type
