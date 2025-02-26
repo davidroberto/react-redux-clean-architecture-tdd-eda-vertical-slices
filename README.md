@@ -115,9 +115,9 @@ sequenceDiagram
   init: {
     'theme': 'base',
     'themeVariables': {
-        'background': '#f6f6f6',
-        'primaryColor': 'black',
-        'primaryTextColor': 'white',
+        'background': 'white',
+        'primaryColor': 'white',
+        'primaryTextColor': 'black',
         'primaryBorderColor': 'lightgrey',
         'lineColor': 'green',
         'secondaryColor': 'green',
@@ -184,9 +184,9 @@ sequenceDiagram
   init: {
     'theme': 'base',
     'themeVariables': {
-        'background': '#f6f6f6',
-        'primaryColor': 'black',
-        'primaryTextColor': 'white',
+        'background': 'white',
+        'primaryColor': 'white',
+        'primaryTextColor': 'black',
         'primaryBorderColor': 'lightgrey',
         'lineColor': 'green',
         'secondaryColor': 'green',
@@ -202,7 +202,7 @@ sequenceDiagram
 title: Create Exercice State
 ---
 
-flowchart TD
+flowchart TB
     A[
         Initial
         ---
