@@ -7,7 +7,7 @@ import {
 import {
     exercicesLoaded, exercicesLoadingFailed, exercicesLoadingStarted,
 } from "@/src/exercice/features/list-exercices/list-exercices.events";
-import {validateExercice} from "@/src/exercice/features/create-exercice/create-exercice.validator";
+import {validateExercice} from "@/src/exercice/features/create-exercice/create-exercice-validator.service";
 
 export const createExerciceUseCase = (createExercice: CreateExerciceCommand): Thunk => async (
     dispatch: Dispatch, _, {exerciceRepository}) => {

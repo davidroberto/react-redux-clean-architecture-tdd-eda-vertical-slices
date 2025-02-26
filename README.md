@@ -2,7 +2,7 @@
 
 ## A demo application built with React and Redux, showcasing an event-driven architecture implemented using Clean Architecture and vertical slices principles.
 
-### Issues in react with "classic" react state management, without clean architecture:
+### Issues in react with "classic" react state management, without clean architecture and redux:
 - Feeling like I'm hacking things together to manage my components' state
 - Struggling to decouple enough from the UI
 - Creating/moving hooks and "services" here and there
@@ -11,6 +11,18 @@
 - Trying to implement principles that don't fit well with React’s flow, ending up with overengineered solutions
 - Having to reload the page to see state changes and replay scenarios
 - Needing a backend to test scenarios and polluting the database with every manual test
+
+
+### Avantages of using clean architecture + redux
+- Being able to TDD / test my use cases and state changes
+- Developing my use cases and state changes without needing to open my browser or worry about React
+- Using React only for what it was designed for: the UI
+- Unlock event-driven architecture that allow finite state machine modeling
+  - Which allow making state and transition predictable
+  - Wich allow the static analyze and optimization of state transition
+- Being able to develop the frontend without (yet) having a backend, to get quick product feedback and pivot if needed
+
+
 
 ### Clean Architecture:
 - The layers are not defined with folders like application, domain, infrastructure, etc., but Clean Architecture principles are still respected (dependencies are directed inward, etc.).
@@ -38,14 +50,17 @@
     - OR using a custom utility composeReducers to merge reducers without creating a new state key if reducers operate on the same state portion (e.g., creating/deleting notifications)
 - The UI folder is separated from features to reinforce decoupling and make it easier to reason about the hexagone independently.
 
-### Event Driven Architecture:
+### Redux / Event Driven Architecture:
+- Redux here is used here (in a loose sense) as a synchronous “message bus” using a pub-sub pattern. Each use case dispatch action (similar to message / event), and reducers somehow subscribe to them.
 - Allows visualizing application state transitions (state machine diagram)
-- Each use case (Redux thunk) dispatches Redux actions (called "events" for clarity), which are listened to by reducers
 - The use case is asynchronous and handles side effects (API calls, etc.)
 - If other events related to another feature need to be dispatched after an event (e.g., creating an exercise triggers a new fetch of exercises), they are dispatched within the use case
   - A use case does not call another use case
   - React components does not manage the application flow
-  
+- The state is not normalized (using Normalizer for exemple) and the ui state is not separated from the domain state in the store (but it can be if the relational / nested data become is too complex)
+
+![redux-message-bus.png](redux-message-bus.png)
+(_from Yazan Alaboudi Redux talk: https://slides.com/yazanalaboudi/deck#/46_)
 ### TDD / dev methodology: 
 - Definition of the scenario for the feature. Example:
   - As a user, I want to create an exercise
@@ -65,12 +80,7 @@
 - For validations: simple validation services called within use cases
 
 
-### Avantages:
-- Being able to TDD / test my use cases and state changes
-- Developing my use cases and state changes without needing to open my browser or worry about React
-- Using React only for what it was designed for: the UI
-- Making state predictable
-- Being able to develop the frontend without (yet) having a backend, to get quick product feedback and pivot if needed
+
 
 
 ### Execution flow:
@@ -242,3 +252,17 @@ flowchart TB
 
 ```
 
+
+Useful ressources: 
+
+- [Michaël Azerhad Linkedin Redux posts](https://www.linkedin.com/in/michael-azerhad/)
+- [Codeminer42 Blog "Scalable Frontend series"](https://blog.codeminer42.com/scalable-frontend-1-architecture-9b80a16b8ec7/)
+- [Dan Abramov's "Hot Reloading with Time Travel" talk](https://www.youtube.com/watch?v=xsSnOQynTHs)
+- [Dan Abramov's "The Redux Journey " talk](https://www.youtube.com/watch?v=uvAXVMwHJXU)
+- [Lee Byron's "Immutable Application Architecture" talk](https://www.youtube.com/watch?v=oTcDmnAXZ4E)
+- [Nir Kaufman's "Advanced Redux Patterns" talk](https://www.youtube.com/watch?v=JUuic7mEs-s)
+- [Robin Wieruch's book "Taming state in react"](https://github.com/taming-the-state-in-react/taming-the-state-in-react?tab=readme-ov-file)
+- [Facebook Flux presentation](https://www.youtube.com/watch?v=nYkdrAPrdcw&list=PLb0IAmt7-GS188xDYE-u1ShQmFFGbrk0v)
+- [Yazan Alaboudi's "Our Redux Anti Pattern" talk](https://slides.com/yazanalaboudi/deck#/46)
+- [Robert C. Martin's "Clean Architecture" book](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html)
+- [David Khourshid's "Robust React User Interfaces with Finite State Machines" article](http://css-tricks.com/robust-react-user-interfaces-with-finite-state-machines/)

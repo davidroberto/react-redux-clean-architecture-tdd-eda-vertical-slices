@@ -5,10 +5,10 @@ import {
 } from "@/src/exercice/features/get-exercice-by-id/get-exercice-by-id.events";
 import {exercicesLoadingFailed,} from "@/src/exercice/features/list-exercices/list-exercices.events";
 import {exerciceUpdated, exerciceUpdateFailed,} from "@/src/exercice/features/update-exercice/update-exercice.events";
-import {generateNotification} from "@/src/notification/features/add-notification/generate-notification.service";
 import {createReducer} from "@reduxjs/toolkit";
 import {notificationsInitialState} from "@/src/notification/features/shared/notification.state";
 import {NotificationType} from "@/src/notification/features/shared/notification-type.enum";
+import {generateNotification} from "@/src/notification/features/add-notification/notification-generator.service";
 
 const addNotificationReducer = createReducer(notificationsInitialState, (builder) => {
     builder
