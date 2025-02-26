@@ -2,44 +2,43 @@ import {Thunk} from "@/src/shared/application/thunk.type";
 import {Dispatch} from "@reduxjs/toolkit";
 import {CreateExerciceCommand} from "@/src/exercice/features/create-exercice/create-exercice.command";
 import {
-  exerciceCreated,
-  exerciceCreationFailed,
-  exerciceCreationStarted,
+    exerciceCreated, exerciceCreationFailed, exerciceCreationStarted,
 } from "@/src/exercice/features/create-exercice/create-exercice.events";
 import {
-  exercicesLoaded,
-  exercicesLoadingFailed,
-  exercicesLoadingStarted,
+    exercicesLoaded, exercicesLoadingFailed, exercicesLoadingStarted,
 } from "@/src/exercice/features/list-exercices/list-exercices.events";
+import {validateExercice} from "@/src/exercice/features/create-exercice/create-exercice.validator";
 
-export const createExerciceUseCase =
-    (createExercice: CreateExerciceCommand): Thunk =>
-        async (dispatch: Dispatch, _, {exerciceRepository}) => {
-            dispatch(exerciceCreationStarted());
+export const createExerciceUseCase = (createExercice: CreateExerciceCommand): Thunk => async (
+    dispatch: Dispatch, _, {exerciceRepository}) => {
+    dispatch(exerciceCreationStarted());
 
-            try {
-                await exerciceRepository.create(createExercice);
+    const errors = validateExercice(createExercice);
 
-                dispatch(exerciceCreated());
+    if (errors.length > 0) {
+        for (const error of errors) {
+            dispatch(exerciceCreationFailed("Exercice création échouée : " + error));
+        }
+        return;
+    }
 
-                dispatch(exercicesLoadingStarted());
+    try {
+        await exerciceRepository.create(createExercice);
 
-                try {
-                    const exercices = await exerciceRepository.findAll();
+        dispatch(exerciceCreated());
 
-                    dispatch(exercicesLoaded(exercices));
-                } catch (error: any) {
-                    const errorMessage =
-                        error instanceof Error
-                            ? error.message
-                            : "An error occurred while loading the exercices.";
-                    dispatch(exercicesLoadingFailed(errorMessage));
-                }
-            } catch (error: any) {
-                const errorMessage =
-                    error instanceof Error
-                        ? error.message
-                        : "An error occurred while creating the exercice.";
-                dispatch(exerciceCreationFailed(errorMessage));
-            }
-        };
+        dispatch(exercicesLoadingStarted());
+
+        try {
+            const exercices = await exerciceRepository.findAll();
+
+            dispatch(exercicesLoaded(exercices));
+        } catch (error: any) {
+            const errorMessage = error instanceof Error ? error.message : "Exercice création échouée";
+            dispatch(exercicesLoadingFailed(errorMessage));
+        }
+    } catch (error: any) {
+        const errorMessage = error instanceof Error ? error.message : "Exercice création échouée";
+        dispatch(exerciceCreationFailed(errorMessage));
+    }
+};

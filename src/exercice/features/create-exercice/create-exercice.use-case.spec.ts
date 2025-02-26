@@ -39,7 +39,7 @@ describe("As a user i want to create an exercice", () => {
         });
 
         describe("When the exercice creation starts", () => {
-            beforeEach(() => {
+            beforeAll(() => {
                 createExerciceUseCase(createExerciceCommand)(testStore.dispatch, testStore.getState, {
                     exerciceRepository: new ExerciceLoadingRepositoryFake(),
                 },);
@@ -62,7 +62,7 @@ describe("As a user i want to create an exercice", () => {
         });
 
         describe("When the exercice is created successfully", () => {
-            beforeEach(async () => {
+            beforeAll(async () => {
                 await createExerciceUseCase(createExerciceCommand)(testStore.dispatch, testStore.getState, {
                     exerciceRepository: new ExerciceSuccessRepositoryFake(),
                 },);
@@ -96,8 +96,8 @@ describe("As a user i want to create an exercice", () => {
             testStore = createTestStore();
         });
 
-        describe("When creating an exercice fails", () => {
-            beforeEach(async () => {
+        describe("When creating an exercice fails (server)", () => {
+            beforeAll(async () => {
                 await createExerciceUseCase(createExerciceCommand)(testStore.dispatch, testStore.getState, {
                     exerciceRepository: new ExerciceErrorRepositoryFake(),
                 },);
@@ -113,10 +113,41 @@ describe("As a user i want to create an exercice", () => {
             test("Then it should add an error notification", () => {
                 const createExerciceErrorNotification = testStore
                     .getState()
-                    .notifications.list.find((notification) => notification.message === "Exercice création échouée",);
+                    .notifications.list.find((notification) => notification.message === "Exercice création échouée");
 
                 expect(createExerciceErrorNotification).not.toBeUndefined();
                 expect(createExerciceErrorNotification?.type).toBe(NotificationType.ERROR,);
+            });
+        });
+
+        describe("When creating an exercice fails (title too short)", () => {
+            beforeAll(async () => {
+                const createExerciceCommandWithShortTitle = {
+                    ...createExerciceCommand,
+                    title: "R",
+                };
+
+                await createExerciceUseCase(createExerciceCommandWithShortTitle)(
+                    testStore.dispatch, testStore.getState, {
+                        exerciceRepository: new ExerciceSuccessRepositoryFake(),
+                    },);
+            });
+            test("Then the loading should be false", () => {
+                expect(testStore.getState().exercices.create.isLoading).toBe(false);
+            });
+
+            test("Then the exercices list should be empty", async () => {
+                expect(testStore.getState().exercices.list.exercices.length).toBe(0);
+            });
+
+            test("Then it should add an error notification", () => {
+                const createExerciceErrorNotification = testStore
+                    .getState()
+                    .notifications.list.find(
+                        (notification) => notification.message === "Exercice création échouée : titre trop court");
+
+                expect(createExerciceErrorNotification).not.toBeUndefined();
+                expect(createExerciceErrorNotification?.type).toBe(NotificationType.ERROR);
             });
         });
     });
