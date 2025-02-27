@@ -63,6 +63,7 @@
   - A use case does not call another use case
   - React components does not manage the application flow
 - The state is not normalized (using Normalizer for exemple) and the ui state is not separated from the domain state in the store (but it can be if the relational / nested data become is too complex)
+- The selectors here are not created using createSelector (Reselect) because the data retrieved from the store is not derived or transformed
 
 ![redux-message-bus.png](redux-message-bus.png)
 (_from Yazan Alaboudi Redux talk: https://slides.com/yazanalaboudi/deck#/46_)
