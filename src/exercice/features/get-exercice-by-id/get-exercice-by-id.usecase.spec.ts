@@ -6,6 +6,11 @@ import {ExerciceSuccessRepositoryFake} from "@/src/exercice/features/shared/test
 import {ExerciceErrorRepositoryFake} from "@/src/exercice/features/shared/test/exercice-error.repository.fake";
 import {Exercice, ExercicesSortedByMuscle,} from "@/src/exercice/features/shared/exercice.model.type";
 import {NotificationType} from "@/src/notification/features/shared/notification-type.enum";
+import {getExercicesList} from "@/src/exercice/features/list-exercices/list-exercices.selectors";
+import {
+    getCurrentExercice, getCurrentExerciceLoading
+} from "@/src/exercice/features/get-exercice-by-id/get-exercice-by-id.selectors";
+import {getNotificationsList} from "@/src/notification/features/shared/notification.selectors";
 
 let testStore: AppStore;
 
@@ -16,18 +21,18 @@ describe("As a user i want to get an exercice by its id", () => {
     describe("Given two exercices are created", () => {
         beforeAll(async () => {
             testStore = await createTestStoreWithExercices();
-            exercices = testStore.getState().exercices.list.exercices;
+            exercices = getExercicesList(testStore.getState());
             exerciceIdToRetrieve = exercices[0].id;
         });
 
         describe("When the exercice fetching has not started", () => {
 
             test("Then the loading should be false", async () => {
-                expect(testStore.getState().exercices.current.isLoading).toBe(false);
+                expect(getCurrentExerciceLoading(testStore.getState())).toBe(false);
             });
 
             test("Then the current exercice should be null", async () => {
-                expect(testStore.getState().exercices.current.exercice).toBe(null);
+                expect(getCurrentExercice(testStore.getState())).toBe(null);
             });
         });
     });
@@ -35,7 +40,7 @@ describe("As a user i want to get an exercice by its id", () => {
     describe("Given two exercices are created", () => {
         beforeAll(async () => {
             testStore = await createTestStoreWithExercices();
-            exercices = testStore.getState().exercices.list.exercices;
+            exercices = getExercicesList(testStore.getState());
             exerciceIdToRetrieve = exercices[0].id;
         });
 
@@ -47,7 +52,7 @@ describe("As a user i want to get an exercice by its id", () => {
             });
 
             test("Then the loading should be true", async () => {
-                expect(testStore.getState().exercices.current.isLoading).toBe(true);
+                expect(getCurrentExerciceLoading(testStore.getState())).toBe(true);
             });
         });
     });
@@ -55,7 +60,7 @@ describe("As a user i want to get an exercice by its id", () => {
     describe("Given two exercices are created", () => {
         beforeAll(async () => {
             testStore = await createTestStoreWithExercices();
-            exercices = testStore.getState().exercices.list.exercices;
+            exercices = getExercicesList(testStore.getState());
             exerciceIdToRetrieve = exercices[0].id;
         });
 
@@ -67,18 +72,16 @@ describe("As a user i want to get an exercice by its id", () => {
             });
 
             test("Then the loading should be false", async () => {
-                expect(testStore.getState().exercices.current.isLoading).toBe(false);
+                expect(getCurrentExerciceLoading(testStore.getState())).toBe(false);
             });
 
             test("Then it should set the retrieved exercice as current exercice", async () => {
-                expect(testStore.getState().exercices.current.exercice).toEqual(exercices[0],);
+                expect(getCurrentExercice(testStore.getState())).toEqual(exercices[0],);
             });
 
             test("Then it should set a success notification", async () => {
-                const getSuccessNotification = testStore
-                    .getState()
-                    .notifications.list.find(
-                        (notification) => notification.message === "Exercice récupération réussie",);
+                const getSuccessNotification = getNotificationsList(testStore.getState()).find(
+                    (notification) => notification.message === "Exercice récupération réussie",);
 
                 expect(getSuccessNotification).not.toBeUndefined();
                 expect(getSuccessNotification?.type).toBe(NotificationType.SUCCESS);
@@ -89,7 +92,7 @@ describe("As a user i want to get an exercice by its id", () => {
     describe("Given two exercices are created", () => {
         beforeAll(async () => {
             testStore = await createTestStoreWithExercices();
-            exercices = testStore.getState().exercices.list.exercices;
+            exercices = getExercicesList(testStore.getState());
             exerciceIdToRetrieve = exercices[0].id;
         });
 
@@ -101,14 +104,12 @@ describe("As a user i want to get an exercice by its id", () => {
             });
 
             test("Then the loading should be false", async () => {
-                expect(testStore.getState().exercices.current.isLoading).toBe(false);
+                expect(getCurrentExerciceLoading(testStore.getState())).toBe(false);
             });
 
             test("Then it should set an error notification", async () => {
-                const getErrorNotification = testStore
-                    .getState()
-                    .notifications.list.find(
-                        (notification) => notification.message === "Exercice récupération échouée",);
+                const getErrorNotification = getNotificationsList(testStore.getState()).find(
+                    (notification) => notification.message === "Exercice récupération échouée",);
 
                 expect(getErrorNotification).not.toBeUndefined();
                 expect(getErrorNotification?.type).toBe(NotificationType.ERROR);

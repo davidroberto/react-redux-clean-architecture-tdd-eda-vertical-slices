@@ -6,6 +6,9 @@ import {createTestStore} from "@/src/shared/application/test/test.store";
 import {createExerciceUseCase} from "@/src/exercice/features/create-exercice/create-exercice.use-case";
 import {CreateExerciceCommand} from "@/src/exercice/features/create-exercice/create-exercice.command";
 import {NotificationType} from "@/src/notification/features/shared/notification-type.enum";
+import {getExercicesList} from "@/src/exercice/features/list-exercices/list-exercices.selectors";
+import {getExerciceCreateLoading} from "@/src/exercice/features/create-exercice/create-exercice.selectors";
+import {getNotificationsList} from "@/src/notification/features/shared/notification.selectors";
 
 describe("As a user i want to create an exercice", () => {
     let testStore: AppStore;
@@ -25,10 +28,10 @@ describe("As a user i want to create an exercice", () => {
 
         describe("When the the exercice creation has not started", () => {
             test("Then the loading should be false", async () => {
-                expect(testStore.getState().exercices.list.isLoading).toBe(false);
+                expect(getExerciceCreateLoading(testStore.getState())).toBe(false);
             });
             test("Then the exercices list should be empty", async () => {
-                expect(testStore.getState().exercices.list.exercices.length).toBe(0);
+                expect(getExercicesList(testStore.getState()).length).toBe(0);
             });
         });
     });
@@ -46,11 +49,11 @@ describe("As a user i want to create an exercice", () => {
             });
 
             test("Then the loading should be true", async () => {
-                expect(testStore.getState().exercices.create.isLoading).toBe(true);
+                expect(getExerciceCreateLoading(testStore.getState())).toBe(true);
             });
 
             test("Then the exercices list should be empty", async () => {
-                expect(testStore.getState().exercices.list.exercices.length).toBe(0);
+                expect(getExercicesList(testStore.getState()).length).toBe(0);
             });
 
         });
@@ -69,20 +72,19 @@ describe("As a user i want to create an exercice", () => {
             });
 
             test("Then the loading should be false", () => {
-                expect(testStore.getState().exercices.create.isLoading).toBe(false);
+                expect(getExerciceCreateLoading(testStore.getState())).toBe(false);
             });
 
             test("Then it should add a success notification", () => {
-                const createSuccessNotification = testStore
-                    .getState()
-                    .notifications.list.find((notification) => notification.message === "Exercice créé",);
+                const createSuccessNotification = getNotificationsList(testStore.getState()).find(
+                    (notification) => notification.message === "Exercice créé",);
 
                 expect(createSuccessNotification).not.toBeUndefined();
                 expect(createSuccessNotification?.type).toBe(NotificationType.SUCCESS);
             });
 
             test("Then the new exercice should be in the list", () => {
-                const exercicesInStore = testStore.getState().exercices.list.exercices;
+                const exercicesInStore = getExercicesList(testStore.getState());
 
                 const newExerciceInStore = exercicesInStore.find(
                     (exercice) => exercice.title === createExerciceCommand.title,);
@@ -103,17 +105,16 @@ describe("As a user i want to create an exercice", () => {
                 },);
             });
             test("Then the loading should be false", () => {
-                expect(testStore.getState().exercices.create.isLoading).toBe(false);
+                expect(getExerciceCreateLoading(testStore.getState())).toBe(false);
             });
 
             test("Then the exercices list should be empty", async () => {
-                expect(testStore.getState().exercices.list.exercices.length).toBe(0);
+                expect(getExercicesList(testStore.getState()).length).toBe(0);
             });
 
             test("Then it should add an error notification", () => {
-                const createExerciceErrorNotification = testStore
-                    .getState()
-                    .notifications.list.find((notification) => notification.message === "Exercice création échouée");
+                const createExerciceErrorNotification = getNotificationsList(testStore.getState()).find(
+                    (notification) => notification.message === "Exercice création échouée");
 
                 expect(createExerciceErrorNotification).not.toBeUndefined();
                 expect(createExerciceErrorNotification?.type).toBe(NotificationType.ERROR,);
@@ -133,18 +134,16 @@ describe("As a user i want to create an exercice", () => {
                     },);
             });
             test("Then the loading should be false", () => {
-                expect(testStore.getState().exercices.create.isLoading).toBe(false);
+                expect(getExerciceCreateLoading(testStore.getState())).toBe(false);
             });
 
             test("Then the exercices list should be empty", async () => {
-                expect(testStore.getState().exercices.list.exercices.length).toBe(0);
+                expect(getExercicesList(testStore.getState()).length).toBe(0);
             });
 
             test("Then it should add an error notification", () => {
-                const createExerciceErrorNotification = testStore
-                    .getState()
-                    .notifications.list.find(
-                        (notification) => notification.message === "Exercice création échouée : titre trop court");
+                const createExerciceErrorNotification = getNotificationsList(testStore.getState()).find(
+                    (notification) => notification.message === "Exercice création échouée : titre trop court");
 
                 expect(createExerciceErrorNotification).not.toBeUndefined();
                 expect(createExerciceErrorNotification?.type).toBe(NotificationType.ERROR);

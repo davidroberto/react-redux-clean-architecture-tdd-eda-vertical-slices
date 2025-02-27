@@ -2,9 +2,9 @@ import {useEffect, useState} from "react";
 import * as ImagePicker from "expo-image-picker";
 import {useLocalSearchParams, useRouter} from "expo-router";
 import {useDispatch, useSelector} from "react-redux";
-import {RootState} from "@/src/shared/application/root.store";
 import {getExerciceByIdUseCase} from "@/src/exercice/features/get-exercice-by-id/get-exercice-by-id.usecase";
 import {updateExerciceUseCase} from "@/src/exercice/features/update-exercice/update-exercice.usecase";
+import {getCurrentExercice} from "@/src/exercice/features/get-exercice-by-id/get-exercice-by-id.selectors";
 
 export const useUpdateExerciceViewModel = (): {
     title: string;
@@ -24,9 +24,7 @@ export const useUpdateExerciceViewModel = (): {
     const [image, setImage] = useState<string | null>(null);
     const [youtubeVideoUrl, setYoutubeVideoUrl] = useState("");
 
-    const currentExercice = useSelector(
-        (state: RootState) => state.exercices.current.exercice,
-    );
+    const currentExercice = useSelector(getCurrentExercice);
 
     const dispatch = useDispatch();
     useEffect(() => {
@@ -59,14 +57,12 @@ export const useUpdateExerciceViewModel = (): {
     const router = useRouter();
 
     const handleSubmit = async () => {
-        dispatch(
-            updateExerciceUseCase(id, {
-                title,
-                description,
-                image,
-                youtubeVideoUrl,
-            }),
-        );
+        dispatch(updateExerciceUseCase(id, {
+            title,
+            description,
+            image,
+            youtubeVideoUrl,
+        }),);
 
         router.push("exercices");
     };

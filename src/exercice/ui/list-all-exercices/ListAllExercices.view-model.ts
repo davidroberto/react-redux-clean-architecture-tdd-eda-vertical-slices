@@ -1,10 +1,12 @@
 import {useDispatch, useSelector} from "react-redux";
 import {useEffect} from "react";
 import {useRouter} from "expo-router";
-import {RootState} from "@/src/shared/application/root.store";
 import {Exercice, ExercicesSortedByMuscle,} from "@/src/exercice/features/shared/exercice.model.type";
 import {listExercicesUseCase} from "@/src/exercice/features/list-exercices/list-exercices.use-case";
 import {ExerciceSortEnum} from "@/src/exercice/features/list-exercices/list-exercices-sort.enum";
+import {
+    getExercicesList, getExercicesListLoading
+} from "@/src/exercice/features/list-exercices/list-exercices.selectors";
 
 export const uselistAllExercices = (): {
     exercices: Exercice[] | ExercicesSortedByMuscle[];
@@ -12,12 +14,8 @@ export const uselistAllExercices = (): {
     navigateToCreateExercice: () => void;
 } => {
     const dispatch = useDispatch();
-    const exercices = useSelector(
-        (state: RootState) => state.exercices.list.exercices,
-    );
-    const isLoading = useSelector(
-        (state: RootState) => state.exercices.list.isLoading,
-    );
+    const exercices = useSelector(getExercicesList);
+    const isLoading = useSelector(getExercicesListLoading);
 
     useEffect(() => {
         //todo : fix type
@@ -29,5 +27,9 @@ export const uselistAllExercices = (): {
         router.push("exercices/create-exercice");
     };
 
-    return {exercices, isLoading, navigateToCreateExercice};
+    return {
+        exercices,
+        isLoading,
+        navigateToCreateExercice
+    };
 };

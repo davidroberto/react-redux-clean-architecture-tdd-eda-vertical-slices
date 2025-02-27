@@ -2,6 +2,11 @@
 
 ## A demo application built with React and Redux, showcasing an event-driven architecture implemented using Clean Architecture and vertical slices principles.
 
+### Notes: 
+- This project is exploratory and aims to experiment with different ways to structure a front end application and use TDD / tests.
+- Feel free to contribute or provide feedback if you have any ideas, suggestions, or believe something can be improved.
+- The React components and React Native pages are not the main focus of this project and have been kept simple. So you may still encounter some TODO items or TypeScript warnings in the UI layer.
+
 ### Issues in react with "classic" react state management, without clean architecture and redux:
 - Feeling like I'm hacking things together to manage my components' state
 - Struggling to decouple enough from the UI
@@ -255,10 +260,10 @@ flowchart TB
 
 Useful ressources: 
 
-- [Michaël Azerhad Linkedin Redux posts](https://www.linkedin.com/in/michael-azerhad/)
 - [Codeminer42 Blog "Scalable Frontend series"](https://blog.codeminer42.com/scalable-frontend-1-architecture-9b80a16b8ec7/)
 - [Dan Abramov's "Hot Reloading with Time Travel" talk](https://www.youtube.com/watch?v=xsSnOQynTHs)
 - [Dan Abramov's "The Redux Journey " talk](https://www.youtube.com/watch?v=uvAXVMwHJXU)
+- [Michaël Azerhad's Linkedin posts about Redux](https://www.linkedin.com/in/michael-azerhad/)
 - [Lee Byron's "Immutable Application Architecture" talk](https://www.youtube.com/watch?v=oTcDmnAXZ4E)
 - [Nir Kaufman's "Advanced Redux Patterns" talk](https://www.youtube.com/watch?v=JUuic7mEs-s)
 - [Robin Wieruch's book "Taming state in react"](https://github.com/taming-the-state-in-react/taming-the-state-in-react?tab=readme-ov-file)

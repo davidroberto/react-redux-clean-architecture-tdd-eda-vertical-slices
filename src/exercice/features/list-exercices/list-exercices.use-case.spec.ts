@@ -6,6 +6,10 @@ import {ExerciceLoadingRepositoryFake} from "@/src/exercice/features/shared/test
 import {ExerciceSuccessRepositoryFake} from "@/src/exercice/features/shared/test/exercice-success.repository.fake";
 import {NotificationType} from "@/src/notification/features/shared/notification-type.enum";
 import {createTestStore} from "@/src/shared/application/test/test.store";
+import {
+    getExercicesList, getExercicesListLoading
+} from "@/src/exercice/features/list-exercices/list-exercices.selectors";
+import {getNotificationsList} from "@/src/notification/features/shared/notification.selectors";
 
 describe("As a user i want to get all exercices", () => {
     let testStore: AppStore;
@@ -19,10 +23,10 @@ describe("As a user i want to get all exercices", () => {
         });
         describe("When the the exercices retrieval has not started", () => {
             test("Then the loading should be false", async () => {
-                expect(testStore.getState().exercices.list.isLoading).toBe(false);
+                expect(getExercicesListLoading(testStore.getState())).toBe(false);
             });
             test("Then the exercices should be empty", async () => {
-                expect(testStore.getState().exercices.list.exercices.length).toBe(0);
+                expect(getExercicesList(testStore.getState()).length).toBe(0);
             });
         });
     });
@@ -40,10 +44,10 @@ describe("As a user i want to get all exercices", () => {
                 });
             });
             test("Then it should set the loading to true", async () => {
-                expect(testStore.getState().exercices.list.isLoading).toBe(true);
+                expect(getExercicesListLoading(testStore.getState())).toBe(true);
             });
             test("Then the exercices should be empty", async () => {
-                expect(testStore.getState().exercices.list.exercices.length).toBe(0);
+                expect(getExercicesList(testStore.getState()).length).toBe(0);
             });
         });
     });
@@ -61,10 +65,10 @@ describe("As a user i want to get all exercices", () => {
                 });
             });
             test("Then it should set the loading to false", async () => {
-                expect(testStore.getState().exercices.list.isLoading).toBe(false);
+                expect(getExercicesListLoading(testStore.getState())).toBe(false);
             });
             test("Then it should set the retrieved exercices", async () => {
-                expect(testStore.getState().exercices.list.exercices).toEqual(exercices);
+                expect(getExercicesList(testStore.getState())).toEqual(exercices);
             });
         });
     });
@@ -82,15 +86,13 @@ describe("As a user i want to get all exercices", () => {
                 });
             });
             test("Then it should set an error message", async () => {
-                const getErrorNotification = testStore
-                    .getState()
-                    .notifications.list.find(
-                        (notification) => notification.message === "Exercices récupération échouée",);
+                const getErrorNotification = getNotificationsList(testStore.getState()).find(
+                    (notification) => notification.message === "Exercices récupération échouée",);
                 expect(getErrorNotification).not.toBeUndefined();
                 expect(getErrorNotification?.type).toBe(NotificationType.ERROR);
             });
             test("Then it should set loading to false", async () => {
-                expect(testStore.getState().exercices.list.isLoading).toBe(false);
+                expect(getExercicesListLoading(testStore.getState())).toBe(false);
             });
         });
     });

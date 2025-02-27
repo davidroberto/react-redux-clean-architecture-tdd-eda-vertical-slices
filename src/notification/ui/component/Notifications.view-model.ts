@@ -1,16 +1,17 @@
-import {RootState} from "@/src/shared/application/root.store";
 import {notificationRemoveStarted} from "@/src/notification/features/remove-notification/remove-notification.events";
 import {useDispatch, useSelector} from "react-redux";
+import {getNotificationsList} from "@/src/notification/features/shared/notification.selectors";
 
 export const NotificationsViewModel = () => {
     const dispatch = useDispatch();
 
-    const notifications = useSelector(
-        (state: RootState) => state.notifications.list,
-    );
+    const notifications = useSelector(getNotificationsList);
 
     const handleCloseNotification = (id: string) => {
         dispatch(notificationRemoveStarted(id));
     };
-    return {notifications, handleCloseNotification};
+    return {
+        notifications,
+        handleCloseNotification
+    };
 };
