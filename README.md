@@ -56,7 +56,7 @@
 - The UI folder is separated from features to reinforce decoupling and make it easier to reason about the hexagone independently.
 
 ### Redux / Event Driven Architecture:
-- Redux here is used here (in a loose sense) as a synchronous “message bus” using a pub-sub pattern. Each use case dispatch action (similar to message / event), and reducers somehow subscribe to them.
+- Redux is viewed here as a synchronous “message bus” using a pub-sub pattern (in a loose sense). Each use case dispatch actions (similar to message / event), and reducers somehow subscribe to them.
 - Allows visualizing application state transitions (state machine diagram)
 - The use case is asynchronous and handles side effects (API calls, etc.)
 - If other events related to another feature need to be dispatched after an event (e.g., creating an exercise triggers a new fetch of exercises), they are dispatched within the use case

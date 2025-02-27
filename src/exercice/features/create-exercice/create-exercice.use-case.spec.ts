@@ -26,7 +26,7 @@ describe("As a user i want to create an exercice", () => {
             testStore = createTestStore();
         });
 
-        describe("When the the exercice creation has not started", () => {
+        describe("When the exercice creation has not started", () => {
             test("Then the loading should be false", async () => {
                 expect(getExerciceCreateLoading(testStore.getState())).toBe(false);
             });
@@ -44,8 +44,8 @@ describe("As a user i want to create an exercice", () => {
         describe("When the exercice creation starts", () => {
             beforeAll(() => {
                 createExerciceUseCase(createExerciceCommand)(testStore.dispatch, testStore.getState, {
-                    exerciceRepository: new ExerciceLoadingRepositoryFake(),
-                },);
+                    exerciceRepository: new ExerciceLoadingRepositoryFake()
+                });
             });
 
             test("Then the loading should be true", async () => {
