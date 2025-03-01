@@ -10,8 +10,9 @@ A[
         - Status: idle
         - Error: null
 
-        - List Exercices Data: n
         - Notifications: n
+
+        - List Exercices Data: n
 ]
 
 B[
@@ -20,8 +21,9 @@ B[
         - Status: loading
         - Error: null
 
-        - List Exercices Data: n
         - Notifications: n
+
+        - List Exercices Data: n
 ]
 
 C[
@@ -30,8 +32,9 @@ C[
         - Status: error
         - Error: error message
         
-        - List Exercices Data: n
         - Notification: n + 1 error
+
+        - List Exercices Data: n
 ]
 
 D[
@@ -40,12 +43,24 @@ D[
         - Status: success
         - Error: none
     
-        - List Exercices Data: n + 1
         - Notification: n + 1 success
 ]
 
-A -->|Exercices deletion started|B
-B -->|Exercices deletion failed|C
-B -->|Exercices deletion success|D
+E[
+    List exercices Success
+    ---
+        - ...
+        - Data: n - deleted exercice
+]
+
+subgraph Delete Exercice 
+    A -->|Exercices deletion started|B
+    B -->|Exercices deletion failed|C
+    B -->|Exercices deletion success|D
+end
+
+subgraph List Exercices
+D -->|...|E
+end
 
 ```

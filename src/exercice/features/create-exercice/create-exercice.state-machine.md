@@ -20,8 +20,9 @@ flowchart TD
             - Status: loading
             - Error: null
         
-            - List Exercices Data: n
             - Notifications: n
+
+            - List Exercices Data: n
     ]
 
     C[
@@ -30,8 +31,9 @@ flowchart TD
             - Status: error
             - Error: error message
             
-            - List Exercices Data: n
             - Notification: n + 1 error
+            
+            - List Exercices Data: n
     ]
 
     D[
@@ -40,12 +42,25 @@ flowchart TD
             - Status: success
             - Error: null
 
-            - List Exercices Data: n + 1 
             - Notification: n + 1 success
     ]
 
+
+    E[
+        List exercices Success
+            ---
+            - ...
+            - Data: n + created exercice
+    ]
+
+subgraph Create Exercice
     A -->|Exercice creation Started|B
     B -->|Exercice creation failed|C
     B -->|Exercice Created|D
+end
+
+subgraph List exercices
+    D -->|...|E
+end
 
 ```

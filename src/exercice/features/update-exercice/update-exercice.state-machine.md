@@ -10,8 +10,9 @@ A[
         - Status: idle
         - Error: null
     
-        - List Exercices Data: n
         - Notifications: n
+
+        - List Exercices Data: n
 ]
 
 B[
@@ -19,9 +20,10 @@ B[
     ---
         - Status: loading
         - Error: null
-    
-        - List Exercices Data: n
+        
         - Notifications: n
+
+        - List Exercices Data: n
 ]
 
 C[
@@ -30,8 +32,9 @@ C[
         - Status: error
         - Error: error message
     
-        - List Exercices Data: n
         - Notification: n + 1 error
+        
+        - List Exercices Data: n
     ]
 
 D[
@@ -40,11 +43,23 @@ D[
         - Status: success
         - Error: null
     
-        - List Exercices Data: n with updated exercice
         - Notification: n + 1 success
 ]
 
-A -->|Exercice updating started|B
-B -->|Exercice updating failed|C
-B -->|Exercice updating success|D
+E[
+    Success
+    ---
+        - ...
+        - Data: n w/ updated exercice
+]
+
+subgraph Update exercice
+    A -->|Exercice updating started|B
+    B -->|Exercice updating failed|C
+    B -->|Exercice updating success|D
+end
+
+subgraph List Exercices
+    D -->|...|E
+end
 ```
