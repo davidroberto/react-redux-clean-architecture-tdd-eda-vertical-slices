@@ -6,14 +6,14 @@ title: Remove Notification State
 flowchart TD
     A[
         Initial
-        ---
-            - Notifications list: notifications
+        
+            - data: n
     ]
 
     B[
         Notification Removed
-        ---
-            - Notifications list: notifications without deleted notification
+        
+            - data: n - deleted notification
     ]
 
 A -->|Remove notification started|B

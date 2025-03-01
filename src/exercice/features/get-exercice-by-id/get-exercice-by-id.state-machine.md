@@ -6,7 +6,7 @@ flowchart TD
 
 A[
     Idle
-    ---
+    
         Status: idle
         Error: null
         Data: null
@@ -16,7 +16,7 @@ A[
 
 B[
     Loading
-    ---
+    
         Status: loading
         Error: null
         Data: null
@@ -26,7 +26,7 @@ B[
 
 C[
     Error
-    ---
+    
         Status: error
         Error: error message
         Data: null
@@ -36,7 +36,7 @@ C[
 
 D[
     Success
-    ---
+    
         Status: error
         Error: null
         Data: exercice
