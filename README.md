@@ -219,42 +219,65 @@ sequenceDiagram
 title: Create Exercice State
 ---
 
-flowchart TB
-    A[
-        Initial
-        ---
-            - Create loading: false
-            - List exercices: none
-            - Notifications: none
-    ]
+flowchart TD
+  A[
+        Idle
+---
+- Status: idle
+- Error: null
 
-    B[
-        Loading
-        ---
-            - Create loading: true
-            - List exercices: none
-            - Notifications: none
-    ]
+- List Exercices Data: n
+- Notifications: n
+]
 
-    C[
-        Error
-        ---
-            - Create loading: false
-            - List exercices: none
-            - Notification: error
-    ]
+B[
+Loading
+---
+- Status: loading
+- Error: null
 
-    D[
-        Success
-        ---
-            - Create loading: false
-            - List exercices: new exercice
-            - Notification: success
-    ]
+- Notifications: n
 
-    A -->|Exercice creation Started|B
-    B -->|Exercice creation failed|C
-    B -->|Exercice Created|D
+- List Exercices Data: n
+]
+
+C[
+Error
+---
+- Status: error
+- Error: error message
+
+- Notification: n + 1 error
+
+- List Exercices Data: n
+]
+
+D[
+Success
+---
+- Status: success
+- Error: null
+
+- Notification: n + 1 success
+]
+
+
+E[
+List exercices Success
+---
+- ...
+- Data: n + created exercice
+]
+
+subgraph Create Exercice
+A -->|Exercice creation Started|B
+B -->|Exercice creation failed|C
+B -->|Exercice Created|D
+end
+
+subgraph List exercices
+D -->|...|E
+end
 
 ```
 
