@@ -12,10 +12,16 @@ export default function UpdateExercice() {
         setYoutubeVideoUrl,
         handleImagePick,
         handleSubmit,
+        exerciceByIdStatus
     } = useUpdateExerciceViewModel();
 
-    return (
-        <View style={styles.container}>
+    if (exerciceByIdStatus === "loading") {
+        return (<View style={styles.container}>
+                <Text style={styles.header}>Chargement...</Text>
+            </View>);
+    }
+
+    return (<View style={styles.container}>
             <Text style={styles.header}>Modifier l'exercice</Text>
 
             <TextInput
@@ -55,8 +61,7 @@ export default function UpdateExercice() {
                 onPress={handleSubmit}
                 color="#ffd33d"
             />
-        </View>
-    );
+        </View>);
 }
 
 const styles = StyleSheet.create({

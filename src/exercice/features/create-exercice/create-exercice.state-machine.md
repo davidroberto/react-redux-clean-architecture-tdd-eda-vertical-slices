@@ -5,35 +5,43 @@ title: Create Exercice State
 
 flowchart TD
     A[
-        Initial
+        Idle
         ---
-            - Create loading: false
-            - List exercices: none
-            - Notifications: none
+            - Status: idle
+            - Error: null
+            
+            - List Exercices Data: n
+            - Notifications: n
     ]
 
     B[
         Loading
         ---
-            - Create loading: true
-            - List exercices: none
-            - Notifications: none
+            - Status: loading
+            - Error: null
+        
+            - List Exercices Data: n
+            - Notifications: n
     ]
 
     C[
         Error
         ---
-            - Create loading: false
-            - List exercices: none
-            - Notification: error
+            - Status: error
+            - Error: error message
+            
+            - List Exercices Data: n
+            - Notification: n + 1 error
     ]
 
     D[
         Success
         ---
-            - Create loading: false
-            - List exercices: new exercice
-            - Notification: success
+            - Status: success
+            - Error: null
+
+            - List Exercices Data: n + 1 
+            - Notification: n + 1 success
     ]
 
     A -->|Exercice creation Started|B

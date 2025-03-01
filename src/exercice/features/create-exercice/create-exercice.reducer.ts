@@ -1,27 +1,37 @@
-import {
-    exerciceCreated, exerciceCreationFailed, exerciceCreationStarted,
-} from "@/src/exercice/features/create-exercice/create-exercice.events";
 import {createReducer} from "@reduxjs/toolkit";
+import {
+    exerciceCreated, exerciceCreationFailed, exerciceCreationStarted
+} from "@/src/exercice/features/create-exercice/create-exercice.events";
+
+export enum CreateExerciceStatus {
+    IDLE = "idle", LOADING = "loading", SUCCESS = "success", ERROR = "error",
+}
 
 export type CreateExerciceState = {
-    isLoading: boolean;
+    error: string | null;
+    status: CreateExerciceStatus;
 };
 
 export const createExerciceInitialState: CreateExerciceState = {
-    isLoading: false,
+    error: null,
+    status: CreateExerciceStatus.IDLE
 };
 
 const createExerciceReducer = createReducer(createExerciceInitialState, (builder) => {
     builder
         .addCase(exerciceCreationStarted, (state) => {
-            state.isLoading = true;
+            state.status = CreateExerciceStatus.LOADING;
         })
+
         .addCase(exerciceCreated, (state) => {
-            state.isLoading = false;
+            state.status = CreateExerciceStatus.SUCCESS;
         })
-        .addCase(exerciceCreationFailed, (state) => {
-            state.isLoading = false;
+
+        .addCase(exerciceCreationFailed, (state, action) => {
+            state.status = CreateExerciceStatus.ERROR;
+            state.error = action.payload;
         })
+
 });
 
 export default createExerciceReducer;

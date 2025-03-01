@@ -1,21 +1,28 @@
-import { deleteExerciceUseCase } from "@/src/exercice/features/delete-exercice/delete-exercice.use-case";
-import { useRouter } from "expo-router";
-import { useDispatch } from "react-redux";
+import {deleteExerciceUseCase} from "@/src/exercice/features/delete-exercice/delete-exercice.use-case";
+import {useRouter} from "expo-router";
+import {useDispatch, useSelector} from "react-redux";
+import {getDeleteExerciceStatus} from "@/src/exercice/features/delete-exercice/delete-exercice.selectors";
+import {DeleteExerciceStatus} from "@/src/exercice/features/delete-exercice/delete-exercice.reducer";
 
 export const useExerciceActionsViewModel = (): {
-  handleEdit: (exerciceId: string) => void;
-  handleDelete: (exerciceId: string) => void;
+    handleEdit: (exerciceId: string) => void;
+    handleDelete: (exerciceId: string) => void;
+    exerciceDeleteStatus: DeleteExerciceStatus;
 } => {
-  const router = useRouter();
-  const dispatch = useDispatch();
+    const router = useRouter();
+    const dispatch = useDispatch();
+    const exerciceDeleteStatus = useSelector(getDeleteExerciceStatus);
 
-  const handleEdit = (exerciceId: string) => {
-    router.push(`/exercices/update/${exerciceId}`);
-  };
+    const handleEdit = (exerciceId: string) => {
+        router.push(`/exercices/update/${exerciceId}`);
+    };
 
-  const handleDelete = async (exerciceId: string) => {
-    dispatch(deleteExerciceUseCase(exerciceId));
-  };
+    const handleDelete = async (exerciceId: string) => {
+        dispatch(deleteExerciceUseCase(exerciceId));
+    };
 
-  return { handleEdit, handleDelete };
+    return {
+        handleEdit,
+        handleDelete
+    };
 };

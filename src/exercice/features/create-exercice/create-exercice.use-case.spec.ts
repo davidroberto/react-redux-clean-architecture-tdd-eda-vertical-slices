@@ -6,8 +6,10 @@ import {createTestStore} from "@/src/shared/application/test/test.store";
 import {createExerciceUseCase} from "@/src/exercice/features/create-exercice/create-exercice.use-case";
 import {CreateExerciceCommand} from "@/src/exercice/features/create-exercice/create-exercice.command";
 import {NotificationType} from "@/src/notification/features/shared/notification-type.enum";
-import {getExercicesList} from "@/src/exercice/features/list-exercices/list-exercices.selectors";
-import {getExerciceCreateLoading} from "@/src/exercice/features/create-exercice/create-exercice.selectors";
+import {getExercicesListData} from "@/src/exercice/features/list-exercices/list-exercices.selectors";
+import {
+    getExerciceCreateError, getExerciceCreateStatus
+} from "@/src/exercice/features/create-exercice/create-exercice.selectors";
 import {getNotificationsList} from "@/src/notification/features/shared/notification.selectors";
 
 describe("As a user i want to create an exercice", () => {
@@ -27,11 +29,16 @@ describe("As a user i want to create an exercice", () => {
         });
 
         describe("When the exercice creation has not started", () => {
-            test("Then the loading should be false", async () => {
-                expect(getExerciceCreateLoading(testStore.getState())).toBe(false);
+            test("Then the status should be idle", async () => {
+                expect(getExerciceCreateStatus(testStore.getState())).toBe("idle");
             });
+
+            test("Then there should be no error", async () => {
+                expect(getExerciceCreateError(testStore.getState())).toBe(null);
+            });
+
             test("Then the exercices list should be empty", async () => {
-                expect(getExercicesList(testStore.getState()).length).toBe(0);
+                expect(getExercicesListData(testStore.getState()).length).toBe(0);
             });
         });
     });
@@ -48,12 +55,16 @@ describe("As a user i want to create an exercice", () => {
                 });
             });
 
-            test("Then the loading should be true", async () => {
-                expect(getExerciceCreateLoading(testStore.getState())).toBe(true);
+            test("Then the status should be loading", async () => {
+                expect(getExerciceCreateStatus(testStore.getState())).toBe("loading");
+            });
+
+            test("Then there should be no error", async () => {
+                expect(getExerciceCreateError(testStore.getState())).toBe(null);
             });
 
             test("Then the exercices list should be empty", async () => {
-                expect(getExercicesList(testStore.getState()).length).toBe(0);
+                expect(getExercicesListData(testStore.getState()).length).toBe(0);
             });
 
         });
@@ -71,8 +82,8 @@ describe("As a user i want to create an exercice", () => {
                 },);
             });
 
-            test("Then the loading should be false", () => {
-                expect(getExerciceCreateLoading(testStore.getState())).toBe(false);
+            test("Then the status should be success", async () => {
+                expect(getExerciceCreateStatus(testStore.getState())).toBe("success");
             });
 
             test("Then it should add a success notification", () => {
@@ -84,7 +95,7 @@ describe("As a user i want to create an exercice", () => {
             });
 
             test("Then the new exercice should be in the list", () => {
-                const exercicesInStore = getExercicesList(testStore.getState());
+                const exercicesInStore = getExercicesListData(testStore.getState());
 
                 const newExerciceInStore = exercicesInStore.find(
                     (exercice) => exercice.title === createExerciceCommand.title,);
@@ -104,12 +115,16 @@ describe("As a user i want to create an exercice", () => {
                     exerciceRepository: new ExerciceErrorRepositoryFake(),
                 },);
             });
-            test("Then the loading should be false", () => {
-                expect(getExerciceCreateLoading(testStore.getState())).toBe(false);
+            test("Then the status should be error", async () => {
+                expect(getExerciceCreateStatus(testStore.getState())).toBe("error");
+            });
+
+            test("Then there should be no error", async () => {
+                expect(getExerciceCreateError(testStore.getState())).toBe("Exercice création échouée");
             });
 
             test("Then the exercices list should be empty", async () => {
-                expect(getExercicesList(testStore.getState()).length).toBe(0);
+                expect(getExercicesListData(testStore.getState()).length).toBe(0);
             });
 
             test("Then it should add an error notification", () => {
@@ -133,12 +148,12 @@ describe("As a user i want to create an exercice", () => {
                         exerciceRepository: new ExerciceSuccessRepositoryFake(),
                     },);
             });
-            test("Then the loading should be false", () => {
-                expect(getExerciceCreateLoading(testStore.getState())).toBe(false);
+            test("Then the status should be error", async () => {
+                expect(getExerciceCreateStatus(testStore.getState())).toBe("error");
             });
 
             test("Then the exercices list should be empty", async () => {
-                expect(getExercicesList(testStore.getState()).length).toBe(0);
+                expect(getExercicesListData(testStore.getState()).length).toBe(0);
             });
 
             test("Then it should add an error notification", () => {

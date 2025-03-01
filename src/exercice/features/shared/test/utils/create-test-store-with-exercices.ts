@@ -7,8 +7,7 @@ export const createTestStoreWithExercices = async () => {
     return createTestStore({
         exercices: {
             list: {
-                exercices,
-                isLoading: false,
+                data: exercices,
             },
         },
     });

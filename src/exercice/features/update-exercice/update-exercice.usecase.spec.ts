@@ -6,8 +6,10 @@ import {createTestStoreWithExercices} from "@/src/exercice/features/shared/test/
 import {UpdateExerciceCommand} from "@/src/exercice/features/update-exercice/update-exercice.command";
 import {updateExerciceUseCase} from "@/src/exercice/features/update-exercice/update-exercice.usecase";
 import {Exercice, ExercicesSortedByMuscle} from "@/src/exercice/features/shared/exercice.model.type";
-import {getExercicesList} from "@/src/exercice/features/list-exercices/list-exercices.selectors";
-import {getExerciceUpdateLoading} from "@/src/exercice/features/update-exercice/update-exercice.selectors";
+import {getExercicesListData} from "@/src/exercice/features/list-exercices/list-exercices.selectors";
+import {
+    getExerciceUpdateError, getExerciceUpdateStatus
+} from "@/src/exercice/features/update-exercice/update-exercice.selectors";
 import {getNotificationsList} from "@/src/notification/features/shared/notification.selectors";
 
 describe("As a user i want to update an exercice", () => {
@@ -27,18 +29,22 @@ describe("As a user i want to update an exercice", () => {
     describe("Given two exercices are created", () => {
         beforeAll(async () => {
             testStore = await createTestStoreWithExercices();
-            exercices = getExercicesList(testStore.getState());
+            exercices = getExercicesListData(testStore.getState());
             exerciceIdToUpdate = exercices[0].id;
         });
 
         describe("When the exercice update has not started", () => {
 
-            test("Then it should set the loading to true", async () => {
-                expect(getExerciceUpdateLoading(testStore.getState())).toBe(false);
+            test("Then the status should be idle", async () => {
+                expect(getExerciceUpdateStatus(testStore.getState())).toBe("idle");
             });
 
-            test("Then the list should still contains the original exercices", async () => {
-                expect(getExercicesList(testStore.getState())).toBe(exercices);
+            test("Then there should be no error", async () => {
+                expect(getExerciceUpdateError(testStore.getState())).toBe(null);
+            });
+
+            test("Then the exercices list should contains the original exercices", async () => {
+                expect(getExercicesListData(testStore.getState())).toEqual(exercices);
             });
 
         });
@@ -47,7 +53,7 @@ describe("As a user i want to update an exercice", () => {
     describe("Given two exercices are created", () => {
         beforeAll(async () => {
             testStore = await createTestStoreWithExercices();
-            exercices = getExercicesList(testStore.getState());
+            exercices = getExercicesListData(testStore.getState());
             exerciceIdToUpdate = exercices[0].id;
         });
 
@@ -61,8 +67,16 @@ describe("As a user i want to update an exercice", () => {
                 );
             });
 
-            test("Then it should set the loading to true", async () => {
-                expect(getExerciceUpdateLoading(testStore.getState())).toBe(true);
+            test("Then the status should be loading", async () => {
+                expect(getExerciceUpdateStatus(testStore.getState())).toBe("loading");
+            });
+
+            test("Then there should be no error", async () => {
+                expect(getExerciceUpdateError(testStore.getState())).toBe(null);
+            });
+
+            test("Then the exercices list should contains the original exercices", async () => {
+                expect(getExercicesListData(testStore.getState())).toEqual(exercices);
             });
         });
     });
@@ -70,7 +84,7 @@ describe("As a user i want to update an exercice", () => {
     describe("Given two exercices are created", () => {
         beforeAll(async () => {
             testStore = await createTestStoreWithExercices();
-            exercices = getExercicesList(testStore.getState());
+            exercices = getExercicesListData(testStore.getState());
             exerciceIdToUpdate = exercices[0].id;
         });
 
@@ -84,13 +98,17 @@ describe("As a user i want to update an exercice", () => {
                 );
             });
 
-            test("Then it should set the loading to false", async () => {
-                expect(getExerciceUpdateLoading(testStore.getState())).toBe(false);
+            test("Then the status should be loading", async () => {
+                expect(getExerciceUpdateStatus(testStore.getState())).toBe("success");
             });
 
-            test("Then it should set the updated exercice as current exercice", async () => {
-                expect(getExercicesList(testStore.getState())[0].id).toEqual(exerciceIdToUpdate,);
-                expect(getExercicesList(testStore.getState())[0].title).toEqual(updateExerciceCommand.title,);
+            test("Then there should be no error", async () => {
+                expect(getExerciceUpdateError(testStore.getState())).toBe(null);
+            });
+
+            test("Then the exercice list data should contain the updated exercice", async () => {
+                expect(getExercicesListData(testStore.getState())[0].id).toEqual(exerciceIdToUpdate);
+                expect(getExercicesListData(testStore.getState())[0].title).toEqual(updateExerciceCommand.title);
             });
 
             test("Then it should set a success notification", async () => {
@@ -105,7 +123,7 @@ describe("As a user i want to update an exercice", () => {
     describe("Given two exercices are created", () => {
         beforeAll(async () => {
             testStore = await createTestStoreWithExercices();
-            exercices = getExercicesList(testStore.getState());
+            exercices = getExercicesListData(testStore.getState());
             exerciceIdToUpdate = exercices[0].id;
         });
 
@@ -119,8 +137,16 @@ describe("As a user i want to update an exercice", () => {
                 );
             });
 
-            test("Then it should set the loading to false", async () => {
-                expect(getExerciceUpdateLoading(testStore.getState())).toBe(false);
+            test("Then the status should be error", async () => {
+                expect(getExerciceUpdateStatus(testStore.getState())).toBe("error");
+            });
+
+            test("Then there should be an error", async () => {
+                expect(getExerciceUpdateError(testStore.getState())).toBe("Exercice maj échouée");
+            });
+
+            test("Then the exercices list should contains the original exercices", async () => {
+                expect(getExercicesListData(testStore.getState())).toEqual(exercices);
             });
 
             test("Then it should set an error notification", async () => {

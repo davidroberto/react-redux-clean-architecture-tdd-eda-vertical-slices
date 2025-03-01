@@ -1,8 +1,10 @@
 import {useState} from "react";
 import * as ImagePicker from "expo-image-picker";
 import {useRouter} from "expo-router";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {createExerciceUseCase} from "@/src/exercice/features/create-exercice/create-exercice.use-case";
+import {getExerciceCreateStatus} from "@/src/exercice/features/create-exercice/create-exercice.selectors";
+import {CreateExerciceStatus} from "@/src/exercice/features/create-exercice/create-exercice.reducer";
 
 export const useCreateExerciceViewModel = (): {
     title: string;
@@ -15,6 +17,7 @@ export const useCreateExerciceViewModel = (): {
     setYoutubeVideoUrl: (youtubeVideoUrl: string) => void;
     handleImagePick: () => void;
     handleSubmit: () => void;
+    createExerciceStatus: CreateExerciceStatus;
 } => {
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
@@ -40,18 +43,18 @@ export const useCreateExerciceViewModel = (): {
     const dispatch = useDispatch();
 
     const handleSubmit = async () => {
-        dispatch(
-            createExerciceUseCase({
-                title,
-                description,
-                image,
-                youtubeVideoUrl,
-                primaryMuscles: [{id: "101"}],
-                secondaryMuscles: [],
-            }),
-        );
+        dispatch(createExerciceUseCase({
+            title,
+            description,
+            image,
+            youtubeVideoUrl,
+            primaryMuscles: [{id: "101"}],
+            secondaryMuscles: [],
+        }),);
         router.push("/exercices");
     };
+
+    const createExerciceStatus = useSelector(getExerciceCreateStatus);
 
     return {
         title,
@@ -64,5 +67,6 @@ export const useCreateExerciceViewModel = (): {
         setYoutubeVideoUrl,
         handleImagePick,
         handleSubmit,
+        createExerciceStatus
     };
 };

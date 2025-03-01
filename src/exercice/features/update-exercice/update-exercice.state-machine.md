@@ -5,35 +5,43 @@ title: Update Exercice State
 flowchart TD
 
 A[
-    Initial
+    Idle
     ---
-        - Exercice update loading: false
-        - Exercice: exercice
-        - Notifications: none
+        - Status: idle
+        - Error: null
+    
+        - List Exercices Data: n
+        - Notifications: n
 ]
 
 B[
-    Updating
+    Loading
     ---
-        - Exercice update loading: true
-        - Exercice: exercice
-        - Notifications: none
+        - Status: loading
+        - Error: null
+    
+        - List Exercices Data: n
+        - Notifications: n
 ]
 
 C[
     Error
     ---
-        - Exercice update loading: false
-        - Exercice: exercice
-        - Notifications: error
-]
+        - Status: error
+        - Error: error message
+    
+        - List Exercices Data: n
+        - Notification: n + 1 error
+    ]
 
 D[
     Success
     ---
-        - Exercice update loading: false
-        - Exercices: updated exercice
-        - Notifications: success
+        - Status: success
+        - Error: null
+    
+        - List Exercices Data: n with updated exercice
+        - Notification: n + 1 success
 ]
 
 A -->|Exercice updating started|B

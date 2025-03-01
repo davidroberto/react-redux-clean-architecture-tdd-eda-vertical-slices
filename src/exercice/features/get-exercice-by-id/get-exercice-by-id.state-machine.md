@@ -5,35 +5,43 @@ title: Get Exercice By Id State
 flowchart TD
 
 A[
-    Initial
+    Idle
     ---
-        - Current exercice loading: false
-        - Exercice: none
-        - Notifications: none
+        - Status: idle
+        - Error: null
+        - Data: null
+        
+        - Notifications: n
 ]
 
 B[
     Loading
     ---
-        - Current exercice loading: true
-        - Exercice: none
-        - Notifications: none
+        - Status: loading
+        - Error: null
+        - Data: null
+        
+        - Notifications: n
 ]
 
 C[
     Error
     ---
-        - Current exercice loading: false
-        - Exercice: none
-        - Notifications: error
+        - Status: error
+        - Error: error message
+        - Data: null
+        
+        - Notification: n + 1 error
 ]
 
 D[
     Success
     ---
-        - Current exercice loading: false
-        - Exercice: fetched exercice
-        - Notifications: success
+        - Status: error
+        - Error: null
+        - Data: exercice
+        
+        - Notification: n
 ]
 
 A -->|Exercice loading started|B

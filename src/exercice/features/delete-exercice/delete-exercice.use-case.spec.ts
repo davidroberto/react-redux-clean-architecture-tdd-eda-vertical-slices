@@ -6,8 +6,10 @@ import {deleteExerciceUseCase} from "@/src/exercice/features/delete-exercice/del
 import {ExerciceSuccessRepositoryFake} from "@/src/exercice/features/shared/test/exercice-success.repository.fake";
 import {ExerciceErrorRepositoryFake} from "@/src/exercice/features/shared/test/exercice-error.repository.fake";
 import {NotificationType} from "@/src/notification/features/shared/notification-type.enum";
-import {getDeleteExerciceLoading} from "@/src/exercice/features/delete-exercice/delete-exercice.selectors";
-import {getExercicesList} from "@/src/exercice/features/list-exercices/list-exercices.selectors";
+import {
+    getDeleteExerciceError, getDeleteExerciceStatus
+} from "@/src/exercice/features/delete-exercice/delete-exercice.selectors";
+import {getExercicesListData} from "@/src/exercice/features/list-exercices/list-exercices.selectors";
 import {getNotificationsList} from "@/src/notification/features/shared/notification.selectors";
 
 describe("As a user i want to delete a created exercice", () => {
@@ -18,16 +20,20 @@ describe("As a user i want to delete a created exercice", () => {
     describe("Given two exercices are already created", () => {
         beforeAll(async () => {
             testStore = await createTestStoreWithExercices();
-            exercicesCreated = getExercicesList(testStore.getState());
+            exercicesCreated = getExercicesListData(testStore.getState());
         });
 
         describe("When the exercice deletion has not started", () => {
-            test("Then the loading should be false", async () => {
-                expect(getDeleteExerciceLoading(testStore.getState())).toBe(false);
+            test("Then the status should be idle", async () => {
+                expect(getDeleteExerciceStatus(testStore.getState())).toBe("idle");
+            });
+
+            test("Then there should be no error", async () => {
+                expect(getDeleteExerciceError(testStore.getState())).toBe(null);
             });
 
             test("Then the exercices list should still contains the created exercices", async () => {
-                expect(getExercicesList(testStore.getState())).toBe(exercicesCreated);
+                expect(getExercicesListData(testStore.getState())).toBe(exercicesCreated);
             });
         });
     });
@@ -35,18 +41,18 @@ describe("As a user i want to delete a created exercice", () => {
     describe("Given two exercices are already created", () => {
         beforeAll(async () => {
             testStore = await createTestStoreWithExercices();
-            exerciceIdToDelete = getExercicesList(testStore.getState())[0].id;
+            exerciceIdToDelete = getExercicesListData(testStore.getState())[0].id;
         });
 
         describe("When the exercice deletion starts", () => {
             beforeAll(async () => {
                 deleteExerciceUseCase(exerciceIdToDelete)(testStore.dispatch, testStore.getState, {
                     exerciceRepository: new ExerciceLoadingRepositoryFake(),
-                },);
+                });
             });
 
-            test("Then it should set the loading to true", async () => {
-                expect(getDeleteExerciceLoading(testStore.getState())).toBe(true);
+            test("Then the status should be loading", async () => {
+                expect(getDeleteExerciceStatus(testStore.getState())).toBe("loading");
             });
         });
     });
@@ -54,7 +60,7 @@ describe("As a user i want to delete a created exercice", () => {
     describe("Given two exercices are already created", () => {
         beforeAll(async () => {
             testStore = await createTestStoreWithExercices();
-            exercicesCreated = getExercicesList(testStore.getState());
+            exercicesCreated = getExercicesListData(testStore.getState());
             exerciceIdToDelete = exercicesCreated[0].id;
         });
 
@@ -65,14 +71,14 @@ describe("As a user i want to delete a created exercice", () => {
                 },);
             });
 
-            test("Then it should set the loading to false", () => {
-                expect(getDeleteExerciceLoading(testStore.getState())).toBe(false);
+            test("Then the status should be loading", async () => {
+                expect(getDeleteExerciceStatus(testStore.getState())).toBe("success");
             });
 
             test("Then the exercice should be removed from the list", () => {
-                expect(getExercicesList(testStore.getState()).length).toBe(exercicesCreated.length - 1,);
+                expect(getExercicesListData(testStore.getState()).length).toBe(exercicesCreated.length - 1,);
 
-                const ExerciceDeletedInStore = getExercicesList(testStore.getState()).find(
+                const ExerciceDeletedInStore = getExercicesListData(testStore.getState()).find(
                     (exercice) => exercice.id === exerciceIdToDelete,);
                 expect(ExerciceDeletedInStore).toBeUndefined();
             });
@@ -90,7 +96,7 @@ describe("As a user i want to delete a created exercice", () => {
     describe("Given two exercices are already created", () => {
         beforeAll(async () => {
             testStore = await createTestStoreWithExercices();
-            exercicesCreated = getExercicesList(testStore.getState());
+            exercicesCreated = getExercicesListData(testStore.getState());
             exerciceIdToDelete = exercicesCreated[0].id;
         });
 
@@ -101,13 +107,17 @@ describe("As a user i want to delete a created exercice", () => {
                 },);
             });
 
-            test("Then it should set the loading to false", () => {
-                expect(getDeleteExerciceLoading(testStore.getState())).toBe(false);
+            test("Then the status should be error", async () => {
+                expect(getDeleteExerciceStatus(testStore.getState())).toBe("error");
+            });
+
+            test("Then there should be an error", async () => {
+                expect(getDeleteExerciceError(testStore.getState())).toBe("Exercice suppression échouée");
             });
 
             test("Then it should set an error notification", () => {
                 const deleteErrorNotification = getNotificationsList(testStore.getState()).find(
-                    (notification) => notification.message === "Exercice suppression échouée",);
+                    (notification) => notification.message === "Exercice suppression échouée");
 
                 expect(deleteErrorNotification).not.toBeUndefined();
                 expect(deleteErrorNotification?.type).toBe(NotificationType.ERROR);

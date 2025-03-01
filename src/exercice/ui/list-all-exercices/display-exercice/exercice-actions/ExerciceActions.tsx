@@ -4,33 +4,37 @@ import {Ionicons} from "@expo/vector-icons";
 import {
     useExerciceActionsViewModel
 } from "@/src/exercice/ui/list-all-exercices/display-exercice/exercice-actions/exercice-actions.view-model";
+import {DeleteExerciceStatus} from "@/src/exercice/features/delete-exercice/delete-exercice.reducer";
 
 type ExerciceActionsProps = {
     exerciceId: string;
 };
 
 const ExerciceActions: React.FC<ExerciceActionsProps> = ({exerciceId}) => {
-    const {handleEdit, handleDelete} = useExerciceActionsViewModel();
+    const {
+        handleEdit,
+        handleDelete,
+        exerciceDeleteStatus
+    } = useExerciceActionsViewModel();
 
-    return (
-        <View style={styles.rightActions}>
-            <TouchableOpacity
-                style={styles.actionButton}
-                onPress={() => handleEdit(exerciceId)}
-            >
-                <Ionicons name="pencil" size={12} color="white"/>
-                <Text style={styles.actionText}>Modifier </Text>
-            </TouchableOpacity>
+    return (<View style={styles.rightActions}>
+        <TouchableOpacity
+            style={styles.actionButton}
+            onPress={() => handleEdit(exerciceId)}
+        >
+            <Ionicons name="pencil" size={12} color="white"/>
+            <Text style={styles.actionText}>Modifier </Text>
+        </TouchableOpacity>
 
-            <TouchableOpacity
-                style={styles.actionButton}
-                onPress={() => handleDelete(exerciceId)}
-            >
-                <Ionicons name="trash" size={15} color="white"/>
-                <Text style={styles.actionText}>Supprimer</Text>
-            </TouchableOpacity>
-        </View>
-    );
+        <TouchableOpacity
+            style={styles.actionButton}
+            onPress={() => handleDelete(exerciceId)}
+            disabled={exerciceDeleteStatus === DeleteExerciceStatus.LOADING}
+        >
+            <Ionicons name="trash" size={15} color="white"/>
+            <Text style={styles.actionText}>Supprimer</Text>
+        </TouchableOpacity>
+    </View>);
 };
 
 const styles = StyleSheet.create({

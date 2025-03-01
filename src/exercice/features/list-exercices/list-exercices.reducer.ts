@@ -4,27 +4,34 @@ import {
 } from "@/src/exercice/features/list-exercices/list-exercices.events";
 import {Exercice, ExercicesSortedByMuscle} from "@/src/exercice/features/shared/exercice.model.type";
 
+export enum ListExercicesStatus {
+    IDLE = "idle", LOADING = "loading", SUCCESS = "success", ERROR = "error",
+}
+
 type ListExercicesReducer = {
-    exercices: Exercice[] | ExercicesSortedByMuscle[];
-    isLoading: boolean;
+    data: Exercice[] | ExercicesSortedByMuscle[];
+    status: ListExercicesStatus;
+    error: string | null;
 };
 
 const listExercicesInitialState: ListExercicesReducer = {
-    exercices: [],
-    isLoading: false,
+    data: [],
+    status: ListExercicesStatus.IDLE,
+    error: null,
 };
 
 const listExercicesReducer = createReducer(listExercicesInitialState, (builder) => {
     builder
         .addCase(exercicesLoadingStarted, (state) => {
-            state.isLoading = true;
+            state.status = ListExercicesStatus.LOADING;
         })
         .addCase(exercicesLoaded, (state, action) => {
-            state.isLoading = false;
-            state.exercices = action.payload;
+            state.data = action.payload;
+            state.status = ListExercicesStatus.SUCCESS;
         })
-        .addCase(exercicesLoadingFailed, (state) => {
-            state.isLoading = false;
+        .addCase(exercicesLoadingFailed, (state, action) => {
+            state.error = action.payload;
+            state.status = ListExercicesStatus.ERROR;
         });
 });
 

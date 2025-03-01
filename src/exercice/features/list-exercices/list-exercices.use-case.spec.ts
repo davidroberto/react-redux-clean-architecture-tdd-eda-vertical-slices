@@ -1,19 +1,19 @@
 import {AppStore} from "@/src/shared/application/root.store";
 import {listExercicesUseCase} from "@/src/exercice/features/list-exercices/list-exercices.use-case";
-import {Exercice} from "@/src/exercice/features/shared/exercice.model.type";
+import {Exercice, ExercicesSortedByMuscle} from "@/src/exercice/features/shared/exercice.model.type";
 import {ExerciceErrorRepositoryFake} from "@/src/exercice/features/shared/test/exercice-error.repository.fake";
 import {ExerciceLoadingRepositoryFake} from "@/src/exercice/features/shared/test/exercice-loading.repository.fake";
 import {ExerciceSuccessRepositoryFake} from "@/src/exercice/features/shared/test/exercice-success.repository.fake";
 import {NotificationType} from "@/src/notification/features/shared/notification-type.enum";
 import {createTestStore} from "@/src/shared/application/test/test.store";
 import {
-    getExercicesList, getExercicesListLoading
+    getExercicesListData, getExercicesListError, getExercicesListStatus
 } from "@/src/exercice/features/list-exercices/list-exercices.selectors";
 import {getNotificationsList} from "@/src/notification/features/shared/notification.selectors";
 
 describe("As a user i want to get all exercices", () => {
     let testStore: AppStore;
-    let exercices: Exercice[];
+    let exercices: Exercice[] | ExercicesSortedByMuscle[];
 
     describe("Given two exercices are created", () => {
         beforeAll(async () => {
@@ -21,12 +21,17 @@ describe("As a user i want to get all exercices", () => {
             const exerciceSuccessRepository = new ExerciceSuccessRepositoryFake();
             exercices = await exerciceSuccessRepository.findAll();
         });
-        describe("When the the exercices retrieval has not started", () => {
-            test("Then the loading should be false", async () => {
-                expect(getExercicesListLoading(testStore.getState())).toBe(false);
+        describe("When the the exercices fetching has not started", () => {
+            test("Then the status should be idle", async () => {
+                expect(getExercicesListStatus(testStore.getState())).toBe("idle");
             });
-            test("Then the exercices should be empty", async () => {
-                expect(getExercicesList(testStore.getState()).length).toBe(0);
+
+            test("Then the data should not contains the exercices", async () => {
+                expect(getExercicesListData(testStore.getState()).length).toBe(0);
+            });
+
+            test("Then there should be no error", async () => {
+                expect(getExercicesListError(testStore.getState())).toBe(null);
             });
         });
     });
@@ -43,11 +48,17 @@ describe("As a user i want to get all exercices", () => {
                     exerciceRepository: new ExerciceLoadingRepositoryFake(),
                 });
             });
-            test("Then it should set the loading to true", async () => {
-                expect(getExercicesListLoading(testStore.getState())).toBe(true);
+
+            test("Then the status should be loading", async () => {
+                expect(getExercicesListStatus(testStore.getState())).toBe("loading");
             });
-            test("Then the exercices should be empty", async () => {
-                expect(getExercicesList(testStore.getState()).length).toBe(0);
+
+            test("Then the data should not contains the exercices", async () => {
+                expect(getExercicesListData(testStore.getState()).length).toBe(0);
+            });
+
+            test("Then there should be no error", async () => {
+                expect(getExercicesListError(testStore.getState())).toBe(null);
             });
         });
     });
@@ -64,11 +75,17 @@ describe("As a user i want to get all exercices", () => {
                     exerciceRepository: new ExerciceSuccessRepositoryFake(),
                 });
             });
-            test("Then it should set the loading to false", async () => {
-                expect(getExercicesListLoading(testStore.getState())).toBe(false);
+
+            test("Then the status should be success", async () => {
+                expect(getExercicesListStatus(testStore.getState())).toBe("success");
             });
-            test("Then it should set the retrieved exercices", async () => {
-                expect(getExercicesList(testStore.getState())).toEqual(exercices);
+
+            test("Then the data should contains the exercices", async () => {
+                expect(getExercicesListData(testStore.getState())).toEqual(exercices);
+            });
+
+            test("Then there should be no error", async () => {
+                expect(getExercicesListError(testStore.getState())).toBe(null);
             });
         });
     });
@@ -85,15 +102,26 @@ describe("As a user i want to get all exercices", () => {
                     exerciceRepository: new ExerciceErrorRepositoryFake(),
                 });
             });
+
+            test("Then the status should be error", async () => {
+                expect(getExercicesListStatus(testStore.getState())).toBe("error");
+            });
+
+            test("Then the data should not contains the exercices", async () => {
+                expect(getExercicesListData(testStore.getState()).length).toEqual(0);
+            });
+
+            test("Then there should be an error", async () => {
+                expect(getExercicesListError(testStore.getState())).toBe("Exercices récupération échouée");
+            });
+
             test("Then it should set an error message", async () => {
                 const getErrorNotification = getNotificationsList(testStore.getState()).find(
                     (notification) => notification.message === "Exercices récupération échouée",);
                 expect(getErrorNotification).not.toBeUndefined();
                 expect(getErrorNotification?.type).toBe(NotificationType.ERROR);
             });
-            test("Then it should set loading to false", async () => {
-                expect(getExercicesListLoading(testStore.getState())).toBe(false);
-            });
+
         });
     });
 });

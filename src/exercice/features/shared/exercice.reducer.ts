@@ -10,7 +10,7 @@ const exercicesReducer = combineReducers({
     delete: deleteExerciceReducer,
     create: createExerciceReducer,
     list: listExercicesReducer,
-    current: getExerciceByIdReducer,
+    getById: getExerciceByIdReducer,
 });
 
 export default exercicesReducer;

@@ -5,35 +5,43 @@ title: Delete Exercice State
 flowchart TD
     
 A[
-    Initial
+    Idle
     ---
-        - Delete loading: false
-        - List exercices: exercices
-        - Notifications: none
+        - Status: idle
+        - Error: null
+
+        - List Exercices Data: n
+        - Notifications: n
 ]
 
 B[
     Loading
     ---
-        - Delete loading: true
-        - List exercices: exercices
-        - Notifications: none
+        - Status: loading
+        - Error: null
+
+        - List Exercices Data: n
+        - Notifications: n
 ]
 
 C[
     Error
     ---
-        - Delete loading: false
-        - List exercices: exercices
-        - Notifications: error
+        - Status: error
+        - Error: error message
+        
+        - List Exercices Data: n
+        - Notification: n + 1 error
 ]
 
 D[
     Success
     ---
-        - Delete loading: false
-        - List exercices: exercices without deleted exercice
-        - Notification: success
+        - Status: success
+        - Error: none
+    
+        - List Exercices Data: n + 1
+        - Notification: n + 1 success
 ]
 
 A -->|Exercices deletion started|B

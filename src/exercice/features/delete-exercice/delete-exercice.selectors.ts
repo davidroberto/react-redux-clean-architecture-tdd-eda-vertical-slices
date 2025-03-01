@@ -1,3 +1,5 @@
 import {RootState} from "@/src/shared/application/root.store";
 
-export const getDeleteExerciceLoading = (state: RootState) => state.exercices.delete.isLoading;
+export const getDeleteExerciceStatus = (state: RootState) => state.exercices.delete.status;
+
+export const getDeleteExerciceError = (state: RootState) => state.exercices.delete.error;

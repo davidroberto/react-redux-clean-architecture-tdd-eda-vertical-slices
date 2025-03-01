@@ -1,5 +1,7 @@
 import {RootState} from "@/src/shared/application/root.store";
 
-export const getExercicesListLoading = (state: RootState) => state.exercices.list.isLoading;
+export const getExercicesListStatus = (state: RootState) => state.exercices.list.status;
 
-export const getExercicesList = (state: RootState) => state.exercices.list.exercices;
+export const getExercicesListData = (state: RootState) => state.exercices.list.data;
+
+export const getExercicesListError = (state: RootState) => state.exercices.list.error;

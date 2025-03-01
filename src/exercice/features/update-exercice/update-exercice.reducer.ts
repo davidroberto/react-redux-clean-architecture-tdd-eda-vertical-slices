@@ -3,24 +3,31 @@ import {
 } from "@/src/exercice/features/update-exercice/update-exercice.events";
 import {createReducer} from "@reduxjs/toolkit";
 
+export enum UpdatExerciceStatus {
+    IDLE = "idle", LOADING = "loading", SUCCESS = "success", ERROR = "error",
+}
+
 type UpdateExerciceState = {
-    isLoading: boolean;
+    status: UpdatExerciceStatus;
+    error: string | null;
 };
 
 const updateExerciceInitialState: UpdateExerciceState = {
-    isLoading: false,
+    status: UpdatExerciceStatus.IDLE,
+    error: null,
 };
 
 const updateExerciceReducer = createReducer(updateExerciceInitialState, (builder) => {
     builder
         .addCase(exerciceUpdateStarted, (state) => {
-            state.isLoading = true;
+            state.status = UpdatExerciceStatus.LOADING;
         })
         .addCase(exerciceUpdated, (state) => {
-            state.isLoading = false;
+            state.status = UpdatExerciceStatus.SUCCESS;
         })
-        .addCase(exerciceUpdateFailed, (state) => {
-            state.isLoading = false;
+        .addCase(exerciceUpdateFailed, (state, action) => {
+            state.status = UpdatExerciceStatus.ERROR;
+            state.error = action.payload;
         });
 });
 

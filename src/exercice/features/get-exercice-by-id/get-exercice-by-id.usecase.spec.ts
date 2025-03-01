@@ -6,9 +6,9 @@ import {ExerciceSuccessRepositoryFake} from "@/src/exercice/features/shared/test
 import {ExerciceErrorRepositoryFake} from "@/src/exercice/features/shared/test/exercice-error.repository.fake";
 import {Exercice, ExercicesSortedByMuscle,} from "@/src/exercice/features/shared/exercice.model.type";
 import {NotificationType} from "@/src/notification/features/shared/notification-type.enum";
-import {getExercicesList} from "@/src/exercice/features/list-exercices/list-exercices.selectors";
+import {getExercicesListData} from "@/src/exercice/features/list-exercices/list-exercices.selectors";
 import {
-    getCurrentExercice, getCurrentExerciceLoading
+    getExerciceByIdData, getExerciceByIdError, getExerciceByIdStatus
 } from "@/src/exercice/features/get-exercice-by-id/get-exercice-by-id.selectors";
 import {getNotificationsList} from "@/src/notification/features/shared/notification.selectors";
 
@@ -21,18 +21,22 @@ describe("As a user i want to get an exercice by its id", () => {
     describe("Given two exercices are created", () => {
         beforeAll(async () => {
             testStore = await createTestStoreWithExercices();
-            exercices = getExercicesList(testStore.getState());
+            exercices = getExercicesListData(testStore.getState());
             exerciceIdToRetrieve = exercices[0].id;
         });
 
         describe("When the exercice fetching has not started", () => {
 
-            test("Then the loading should be false", async () => {
-                expect(getCurrentExerciceLoading(testStore.getState())).toBe(false);
+            test("Then the status should be idle", async () => {
+                expect(getExerciceByIdStatus(testStore.getState())).toBe("idle");
             });
 
-            test("Then the current exercice should be null", async () => {
-                expect(getCurrentExercice(testStore.getState())).toBe(null);
+            test("Then the data should not contains the exercice", async () => {
+                expect(getExerciceByIdData(testStore.getState())).toBe(null);
+            });
+
+            test("Then there should be no error", async () => {
+                expect(getExerciceByIdError(testStore.getState())).toBe(null);
             });
         });
     });
@@ -40,7 +44,7 @@ describe("As a user i want to get an exercice by its id", () => {
     describe("Given two exercices are created", () => {
         beforeAll(async () => {
             testStore = await createTestStoreWithExercices();
-            exercices = getExercicesList(testStore.getState());
+            exercices = getExercicesListData(testStore.getState());
             exerciceIdToRetrieve = exercices[0].id;
         });
 
@@ -51,16 +55,25 @@ describe("As a user i want to get an exercice by its id", () => {
                 },);
             });
 
-            test("Then the loading should be true", async () => {
-                expect(getCurrentExerciceLoading(testStore.getState())).toBe(true);
+            test("Then the status should be loading", async () => {
+                expect(getExerciceByIdStatus(testStore.getState())).toBe("loading");
             });
+
+            test("Then the data should not contains the exercice", async () => {
+                expect(getExerciceByIdData(testStore.getState())).toBe(null);
+            });
+
+            test("Then there should be no error", async () => {
+                expect(getExerciceByIdError(testStore.getState())).toBe(null);
+            });
+
         });
     });
 
     describe("Given two exercices are created", () => {
         beforeAll(async () => {
             testStore = await createTestStoreWithExercices();
-            exercices = getExercicesList(testStore.getState());
+            exercices = getExercicesListData(testStore.getState());
             exerciceIdToRetrieve = exercices[0].id;
         });
 
@@ -71,14 +84,17 @@ describe("As a user i want to get an exercice by its id", () => {
                 },);
             });
 
-            test("Then the loading should be false", async () => {
-                expect(getCurrentExerciceLoading(testStore.getState())).toBe(false);
+            test("Then the status should be success", async () => {
+                expect(getExerciceByIdStatus(testStore.getState())).toBe("success");
             });
 
-            test("Then it should set the retrieved exercice as current exercice", async () => {
-                expect(getCurrentExercice(testStore.getState())).toEqual(exercices[0],);
+            test("Then the data should contains the exercice", async () => {
+                expect(getExerciceByIdData(testStore.getState())).toStrictEqual(exercices[0]);
             });
 
+            test("Then there should be no error", async () => {
+                expect(getExerciceByIdError(testStore.getState())).toBe(null);
+            });
             test("Then it should set a success notification", async () => {
                 const getSuccessNotification = getNotificationsList(testStore.getState()).find(
                     (notification) => notification.message === "Exercice récupération réussie",);
@@ -92,7 +108,7 @@ describe("As a user i want to get an exercice by its id", () => {
     describe("Given two exercices are created", () => {
         beforeAll(async () => {
             testStore = await createTestStoreWithExercices();
-            exercices = getExercicesList(testStore.getState());
+            exercices = getExercicesListData(testStore.getState());
             exerciceIdToRetrieve = exercices[0].id;
         });
 
@@ -103,8 +119,16 @@ describe("As a user i want to get an exercice by its id", () => {
                 },);
             });
 
-            test("Then the loading should be false", async () => {
-                expect(getCurrentExerciceLoading(testStore.getState())).toBe(false);
+            test("Then the status should be error", async () => {
+                expect(getExerciceByIdStatus(testStore.getState())).toBe("error");
+            });
+
+            test("Then there should be an error", async () => {
+                expect(getExerciceByIdError(testStore.getState())).toBe("Exercice récupération échouée");
+            });
+
+            test("Then the data should not contains the exercice", async () => {
+                expect(getExerciceByIdData(testStore.getState())).toBe(null);
             });
 
             test("Then it should set an error notification", async () => {

@@ -1,5 +1,7 @@
 import {RootState} from "@/src/shared/application/root.store";
 
-export const getCurrentExerciceLoading = (state: RootState) => state.exercices.current.isLoading;
+export const getExerciceByIdData = (state: RootState) => state.exercices.getById.data;
 
-export const getCurrentExercice = (state: RootState) => state.exercices.current.exercice;
+export const getExerciceByIdStatus = (state: RootState) => state.exercices.getById.status;
+
+export const getExerciceByIdError = (state: RootState) => state.exercices.getById.error;

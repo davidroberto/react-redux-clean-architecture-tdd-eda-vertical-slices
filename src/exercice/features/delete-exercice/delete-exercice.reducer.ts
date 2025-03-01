@@ -3,24 +3,31 @@ import {
 } from "@/src/exercice/features/delete-exercice/delete-exercice.events";
 import {createReducer} from "@reduxjs/toolkit";
 
+export enum DeleteExerciceStatus {
+    IDLE = "idle", LOADING = "loading", SUCCESS = "success", ERROR = "error",
+}
+
 type DeleteExerciceState = {
-    isLoading: boolean;
+    status: DeleteExerciceStatus;
+    error: string | null;
 };
 
 const deleteExerciceInitialState: DeleteExerciceState = {
-    isLoading: false,
+    status: DeleteExerciceStatus.IDLE,
+    error: null,
 };
 
 const deleteExerciceReducer = createReducer(deleteExerciceInitialState, (builder) => {
     builder
         .addCase(exerciceDeletionStarted, (state) => {
-            state.isLoading = true;
+            state.status = DeleteExerciceStatus.LOADING;
         })
         .addCase(exerciceDeleted, (state) => {
-            state.isLoading = false;
+            state.status = DeleteExerciceStatus.SUCCESS;
         })
-        .addCase(exerciceDeletionFailed, (state) => {
-            state.isLoading = false;
+        .addCase(exerciceDeletionFailed, (state, action) => {
+            state.status = DeleteExerciceStatus.ERROR;
+            state.error = action.payload;
         })
 });
 

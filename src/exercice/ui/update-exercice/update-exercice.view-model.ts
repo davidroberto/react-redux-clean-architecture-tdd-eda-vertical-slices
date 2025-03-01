@@ -4,7 +4,9 @@ import {useLocalSearchParams, useRouter} from "expo-router";
 import {useDispatch, useSelector} from "react-redux";
 import {getExerciceByIdUseCase} from "@/src/exercice/features/get-exercice-by-id/get-exercice-by-id.usecase";
 import {updateExerciceUseCase} from "@/src/exercice/features/update-exercice/update-exercice.usecase";
-import {getCurrentExercice} from "@/src/exercice/features/get-exercice-by-id/get-exercice-by-id.selectors";
+import {
+    getExerciceByIdData, getExerciceByIdStatus
+} from "@/src/exercice/features/get-exercice-by-id/get-exercice-by-id.selectors";
 
 export const useUpdateExerciceViewModel = (): {
     title: string;
@@ -17,6 +19,7 @@ export const useUpdateExerciceViewModel = (): {
     setYoutubeVideoUrl: (youtubeVideoUrl: string) => void;
     handleImagePick: () => void;
     handleSubmit: () => void;
+    exerciceByIdStatus: string;
 } => {
     const {id} = useLocalSearchParams();
     const [title, setTitle] = useState("");
@@ -24,21 +27,20 @@ export const useUpdateExerciceViewModel = (): {
     const [image, setImage] = useState<string | null>(null);
     const [youtubeVideoUrl, setYoutubeVideoUrl] = useState("");
 
-    const currentExercice = useSelector(getCurrentExercice);
-
     const dispatch = useDispatch();
+
     useEffect(() => {
         dispatch(getExerciceByIdUseCase(id));
     }, [id]);
 
-    useEffect(() => {
-        if (currentExercice) {
-            setTitle(currentExercice.title);
-            setDescription(currentExercice.description);
-            setImage(currentExercice.image);
-            setYoutubeVideoUrl(currentExercice.youtubeVideoUrl);
-        }
-    }, [currentExercice]);
+    const exercice = useSelector(getExerciceByIdData);
+
+    if (exercice) {
+        setTitle(exercice.title);
+        setDescription(exercice.description);
+        setImage(exercice.image);
+        setYoutubeVideoUrl(exercice.youtubeVideoUrl);
+    }
 
     const handleImagePick = async () => {
         let result = await ImagePicker.launchImageLibraryAsync({
@@ -67,6 +69,8 @@ export const useUpdateExerciceViewModel = (): {
         router.push("exercices");
     };
 
+    const exerciceByIdStatus = useSelector(getExerciceByIdStatus);
+
     return {
         title,
         setTitle,
@@ -78,5 +82,6 @@ export const useUpdateExerciceViewModel = (): {
         setYoutubeVideoUrl,
         handleImagePick,
         handleSubmit,
+        exerciceByIdStatus
     };
 };

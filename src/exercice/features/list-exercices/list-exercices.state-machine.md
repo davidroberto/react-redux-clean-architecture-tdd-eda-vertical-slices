@@ -5,35 +5,43 @@ title: List Exercices State
 flowchart TD
     
 A[
-    Initial
+   Idle
     ---
-        - List loading: false
-        - List exercices: none
-        - Notifications: none
+        - Status: idle
+        - Error: null
+        - Data: null
+    
+        - Notifications: n
 ]
 
 B[
     Loading
     ---
-        - List loading: true
-        - List exercices: none
-        - Notifications: none
+        - Status: loading
+        - Error: null
+        - Data: null
+    
+        - Notifications: n
 ]
 
 C[
     Error
     ---
-        - List loading: false
-        - List exercices: none
-        - Notifications: error
+        - Status: error
+        - Error: error message
+        - Data: null
+        
+        - Notification: n + 1 error
 ]
 
 D[
     Success
     ---
-        - List loading: false
-        - List exercices: list
-        - Notifications: none
+        - Status: error
+        - Error: null
+        - Data: exercices
+    
+        - Notification: n
 ]
 
 A -->|Exercices loading Started|B
