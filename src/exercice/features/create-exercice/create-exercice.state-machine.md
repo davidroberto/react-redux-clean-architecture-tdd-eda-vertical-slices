@@ -6,61 +6,62 @@ title: Create Exercice State
 flowchart TD
     A[
         Idle
-        ---
-            - Status: idle
-            - Error: null
-            
-            - List Exercices Data: n
-            - Notifications: n
-    ]
+---
+Status: idle
+Error: null
 
-    B[
-        Loading
-        ---
-            - Status: loading
-            - Error: null
-        
-            - Notifications: n
+Notifications: n
 
-            - List Exercices Data: n
-    ]
+List Exercices Data: n
+]
 
-    C[
-        Error
-        ---
-            - Status: error
-            - Error: error message
-            
-            - Notification: n + 1 error
-            
-            - List Exercices Data: n
-    ]
+B[
+Loading
+---
+Status: loading
+Error: null
 
-    D[
-        Success
-        ---
-            - Status: success
-            - Error: null
+Notifications: n
 
-            - Notification: n + 1 success
-    ]
+List Exercices Data: n
+]
+
+C[
+Error
+---
+Status: error
+Error: error message
+
+Notification: n + 1 error
+
+List Exercices Data: n
+]
+
+D[
+Success
+---
+Status: success
+Error: null
+
+Notification: n + 1 success
+]
 
 
-    E[
-        List exercices Success
-            ---
-            - ...
-            - Data: n + created exercice
-    ]
+E[
+List exercices Success
+---
+...
+Data: n + created exercice
+]
 
 subgraph Create Exercice
-    A -->|Exercice creation Started|B
-    B -->|Exercice creation failed|C
-    B -->|Exercice Created|D
+A -->|Exercice creation Started|B
+B -->|Exercice creation failed|C
+B -->|Exercice Created|D
 end
 
 subgraph List exercices
-    D -->|...|E
+D -->|...|E
 end
 
 ```

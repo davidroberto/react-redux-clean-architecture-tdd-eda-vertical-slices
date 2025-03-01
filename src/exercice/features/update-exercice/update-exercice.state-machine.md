@@ -7,50 +7,50 @@ flowchart TD
 A[
     Idle
     ---
-        - Status: idle
-        - Error: null
+        Status: idle
+        Error: null
     
-        - Notifications: n
+        Notifications: n
 
-        - List Exercices Data: n
+        List Exercices Data: n
 ]
 
 B[
     Loading
     ---
-        - Status: loading
-        - Error: null
+        Status: loading
+        Error: null
         
-        - Notifications: n
+        Notifications: n
 
-        - List Exercices Data: n
+        List Exercices Data: n
 ]
 
 C[
     Error
     ---
-        - Status: error
-        - Error: error message
+        Status: error
+        Error: error message
     
-        - Notification: n + 1 error
+        Notification: n + 1 error
         
-        - List Exercices Data: n
+        List Exercices Data: n
     ]
 
 D[
     Success
     ---
-        - Status: success
-        - Error: null
+        Status: success
+        Error: null
     
-        - Notification: n + 1 success
+        Notification: n + 1 success
 ]
 
 E[
     Success
     ---
-        - ...
-        - Data: n w/ updated exercice
+        ...
+        Data: n w/ updated exercice
 ]
 
 subgraph Update exercice

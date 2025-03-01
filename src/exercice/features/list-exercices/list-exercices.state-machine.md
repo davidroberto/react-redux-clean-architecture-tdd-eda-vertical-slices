@@ -7,41 +7,41 @@ flowchart TD
 A[
    Idle
     ---
-        - Status: idle
-        - Error: null
-        - Data: null
+        Status: idle
+        Error: null
+        Data: null
     
-        - Notifications: n
+        Notifications: n
 ]
 
 B[
     Loading
     ---
-        - Status: loading
-        - Error: null
-        - Data: null
+        Status: loading
+        Error: null
+        Data: null
     
-        - Notifications: n
+        Notifications: n
 ]
 
 C[
     Error
     ---
-        - Status: error
-        - Error: error message
-        - Data: null
+        Status: error
+        Error: error message
+        Data: null
         
-        - Notification: n + 1 error
+        Notification: n + 1 error
 ]
 
 D[
     Success
     ---
-        - Status: error
-        - Error: null
-        - Data: exercices
+        Status: error
+        Error: null
+        Data: exercices
     
-        - Notification: n
+        Notification: n
 ]
 
 A -->|Exercices loading Started|B
