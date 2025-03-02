@@ -3,8 +3,9 @@ import {ExerciceLoadingRepositoryFake} from "@/src/exercice/features/shared/test
 import {ExerciceErrorRepositoryFake} from "@/src/exercice/features/shared/test/exercice-error.repository.fake";
 import {ExerciceSuccessRepositoryFake} from "@/src/exercice/features/shared/test/exercice-success.repository.fake";
 import {createTestStoreWithExercices} from "@/src/exercice/features/shared/test/utils/create-test-store-with-exercices";
-import {UpdateExerciceCommand} from "@/src/exercice/features/update-exercice/update-exercice.command";
-import {updateExerciceUseCase} from "@/src/exercice/features/update-exercice/update-exercice.usecase";
+import {
+    UpdateExerciceCommand, updateExerciceUseCase
+} from "@/src/exercice/features/update-exercice/update-exercice.usecase";
 import {Exercice, ExercicesSortedByMuscle} from "@/src/exercice/features/shared/exercice.model.type";
 import {getExercicesListData} from "@/src/exercice/features/list-exercices/list-exercices.state";
 import {

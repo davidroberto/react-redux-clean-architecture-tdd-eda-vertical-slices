@@ -3,8 +3,9 @@ import {ExerciceLoadingRepositoryFake} from "@/src/exercice/features/shared/test
 import {ExerciceSuccessRepositoryFake} from "@/src/exercice/features/shared/test/exercice-success.repository.fake";
 import {ExerciceErrorRepositoryFake} from "@/src/exercice/features/shared/test/exercice-error.repository.fake";
 import {createTestStore} from "@/src/shared/application/test/test.store";
-import {createExerciceUseCase} from "@/src/exercice/features/create-exercice/create-exercice.use-case";
-import {CreateExerciceCommand} from "@/src/exercice/features/create-exercice/create-exercice.command";
+import {
+    CreateExerciceCommand, createExerciceUseCase
+} from "@/src/exercice/features/create-exercice/create-exercice.use-case";
 import {
     getExerciceCreateError, getExerciceCreateStatus
 } from "@/src/exercice/features/create-exercice/create-exercice.state";

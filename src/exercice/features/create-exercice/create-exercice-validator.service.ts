@@ -1,6 +1,6 @@
-import {CreateExerciceCommand} from "@/src/exercice/features/create-exercice/create-exercice.command";
+import {CreateExerciceCommand} from "@/src/exercice/features/create-exercice/create-exercice.use-case";
 
-export const validateExercice = (createExercice: CreateExerciceCommand): string[] => {
+export const validateExerciceService = (createExercice: CreateExerciceCommand): string[] => {
     const MIN_TITLE_LENGTH = 2;
 
     const errors: string[] = [];

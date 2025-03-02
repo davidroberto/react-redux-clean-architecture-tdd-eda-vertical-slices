@@ -36,7 +36,7 @@
 - Redux is integrated within the hexagonal architecture (application and state layers).
 
 
-![react-redux-clean-archi.png](./react-redux-clean-archi.png)
+![react-redux-clean-archi.png](./react-redux-clean-eda.png)
 
 ### Vertical slices:
 - Separation by features
