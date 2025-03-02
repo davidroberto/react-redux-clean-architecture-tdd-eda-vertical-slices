@@ -2,7 +2,6 @@
 
 ## A demo application built with React and Redux, showcasing an event-driven architecture implemented using Clean Architecture and vertical slices principles.
 
-### Notes: 
 - This project is exploratory and aims to experiment with different ways to structure a front end application and use TDD / tests.
 - Feel free to contribute or provide feedback if you have any ideas, suggestions, or believe something can be improved.
 - The React components and React Native pages are not the main focus of this project and have been kept simple. So you may still encounter some TODO items or TypeScript warnings in the UI layer. There is not test for react component.
@@ -81,6 +80,77 @@ When done, we just need to plug in the React component. React is used only for w
 - Implementation of the use case using baby step (green)
 - Refactoring the code (refactor)
 - The unit tests are socials with the use case as the starting point and assert against the current state
+
+
+#### State machine diagram exemple (use case create exercice):
+
+```mermaid
+---
+title: Create Exercice State
+---
+
+flowchart TD
+  A[
+        Idle
+
+Status: idle
+Error: null
+
+Notifications: n
+
+List Exercices Data: n
+]
+
+B[
+Loading
+
+Status: loading
+Error: null
+
+Notifications: n
+
+List Exercices Data: n
+]
+
+C[
+Error
+
+Status: error
+Error: error message
+
+Notification: n + 1 error
+
+List Exercices Data: n
+]
+
+D[
+Success
+
+Status: success
+Error: null
+
+Notification: n + 1 success
+]
+
+
+E[
+List exercices Success
+
+...
+Data: n + created exercice
+]
+
+subgraph Create Exercice
+A -->|Exercice creation Started|B
+B -->|Exercice creation failed|C
+B -->|Exercice Created|D
+end
+
+subgraph List exercices
+D -->|...|E
+end
+
+```
 
 ### ~~DDD~~:
 - No tactical DDD patterns
@@ -245,75 +315,7 @@ sequenceDiagram
   }
 }%%
 ```
-### State machine diagram exemple (use case create exercice):
 
-```mermaid
----
-title: Create Exercice State
----
-
-flowchart TD
-  A[
-        Idle
-
-Status: idle
-Error: null
-
-Notifications: n
-
-List Exercices Data: n
-]
-
-B[
-Loading
-
-Status: loading
-Error: null
-
-Notifications: n
-
-List Exercices Data: n
-]
-
-C[
-Error
-
-Status: error
-Error: error message
-
-Notification: n + 1 error
-
-List Exercices Data: n
-]
-
-D[
-Success
-
-Status: success
-Error: null
-
-Notification: n + 1 success
-]
-
-
-E[
-List exercices Success
-
-...
-Data: n + created exercice
-]
-
-subgraph Create Exercice
-A -->|Exercice creation Started|B
-B -->|Exercice creation failed|C
-B -->|Exercice Created|D
-end
-
-subgraph List exercices
-D -->|...|E
-end
-
-```
 
 
 Useful ressources: 
