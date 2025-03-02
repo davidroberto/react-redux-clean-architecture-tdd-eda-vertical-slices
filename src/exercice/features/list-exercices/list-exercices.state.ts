@@ -1,5 +1,6 @@
 import {Exercice, ExercicesSortedByMuscle} from "@/src/exercice/features/shared/exercice.state";
-import {RootState} from "@/src/shared/application/root.store";
+
+import {RootState} from "@/src/shared/application/root.state";
 
 export type ListExercicesState = {
     data: Exercice[] | ExercicesSortedByMuscle[];

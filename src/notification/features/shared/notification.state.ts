@@ -1,4 +1,4 @@
-import {RootState} from "@/src/shared/application/root.store";
+import {RootState} from "@/src/shared/application/root.state";
 
 export type NotificationsState = {
     list: Notification[];
