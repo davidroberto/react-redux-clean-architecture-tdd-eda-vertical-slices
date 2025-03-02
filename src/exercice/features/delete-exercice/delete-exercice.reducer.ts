@@ -2,20 +2,9 @@ import {
     exerciceDeleted, exerciceDeletionFailed, exerciceDeletionStarted,
 } from "@/src/exercice/features/delete-exercice/delete-exercice.events";
 import {createReducer} from "@reduxjs/toolkit";
-
-export enum DeleteExerciceStatus {
-    IDLE = "idle", LOADING = "loading", SUCCESS = "success", ERROR = "error",
-}
-
-type DeleteExerciceState = {
-    status: DeleteExerciceStatus;
-    error: string | null;
-};
-
-const deleteExerciceInitialState: DeleteExerciceState = {
-    status: DeleteExerciceStatus.IDLE,
-    error: null,
-};
+import {
+    deleteExerciceInitialState, DeleteExerciceStatus
+} from "@/src/exercice/features/delete-exercice/delete-exercice.state";
 
 const deleteExerciceReducer = createReducer(deleteExerciceInitialState, (builder) => {
     builder

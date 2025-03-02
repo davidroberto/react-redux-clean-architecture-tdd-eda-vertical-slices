@@ -4,12 +4,11 @@ import {Exercice, ExercicesSortedByMuscle} from "@/src/exercice/features/shared/
 import {ExerciceErrorRepositoryFake} from "@/src/exercice/features/shared/test/exercice-error.repository.fake";
 import {ExerciceLoadingRepositoryFake} from "@/src/exercice/features/shared/test/exercice-loading.repository.fake";
 import {ExerciceSuccessRepositoryFake} from "@/src/exercice/features/shared/test/exercice-success.repository.fake";
-import {NotificationType} from "@/src/notification/features/shared/notification-type.enum";
 import {createTestStore} from "@/src/shared/application/test/test.store";
 import {
     getExercicesListData, getExercicesListError, getExercicesListStatus
-} from "@/src/exercice/features/list-exercices/list-exercices.selectors";
-import {getNotificationsList} from "@/src/notification/features/shared/notification.selectors";
+} from "@/src/exercice/features/list-exercices/list-exercices.state";
+import {getNotificationsList, NotificationType} from "@/src/notification/features/shared/notification.state";
 
 describe("As a user i want to get all exercices", () => {
     let testStore: AppStore;

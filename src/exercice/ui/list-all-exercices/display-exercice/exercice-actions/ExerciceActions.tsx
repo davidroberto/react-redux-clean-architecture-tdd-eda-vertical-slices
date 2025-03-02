@@ -4,7 +4,8 @@ import {Ionicons} from "@expo/vector-icons";
 import {
     useExerciceActionsViewModel
 } from "@/src/exercice/ui/list-all-exercices/display-exercice/exercice-actions/exercice-actions.view-model";
-import {DeleteExerciceStatus} from "@/src/exercice/features/delete-exercice/delete-exercice.reducer";
+
+import {DeleteExerciceStatus} from "@/src/exercice/features/delete-exercice/delete-exercice.state";
 
 type ExerciceActionsProps = {
     exerciceId: string;

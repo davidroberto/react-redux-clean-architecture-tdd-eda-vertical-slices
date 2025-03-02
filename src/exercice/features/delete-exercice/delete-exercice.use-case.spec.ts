@@ -5,12 +5,11 @@ import {ExerciceLoadingRepositoryFake} from "@/src/exercice/features/shared/test
 import {deleteExerciceUseCase} from "@/src/exercice/features/delete-exercice/delete-exercice.use-case";
 import {ExerciceSuccessRepositoryFake} from "@/src/exercice/features/shared/test/exercice-success.repository.fake";
 import {ExerciceErrorRepositoryFake} from "@/src/exercice/features/shared/test/exercice-error.repository.fake";
-import {NotificationType} from "@/src/notification/features/shared/notification-type.enum";
 import {
     getDeleteExerciceError, getDeleteExerciceStatus
-} from "@/src/exercice/features/delete-exercice/delete-exercice.selectors";
-import {getExercicesListData} from "@/src/exercice/features/list-exercices/list-exercices.selectors";
-import {getNotificationsList} from "@/src/notification/features/shared/notification.selectors";
+} from "@/src/exercice/features/delete-exercice/delete-exercice.state";
+import {getExercicesListData} from "@/src/exercice/features/list-exercices/list-exercices.state";
+import {getNotificationsList, NotificationType} from "@/src/notification/features/shared/notification.state";
 
 describe("As a user i want to delete a created exercice", () => {
     let exercicesCreated: Exercice[] | ExercicesSortedByMuscle[];

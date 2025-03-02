@@ -6,11 +6,11 @@ import {createTestStoreWithExercices} from "@/src/exercice/features/shared/test/
 import {UpdateExerciceCommand} from "@/src/exercice/features/update-exercice/update-exercice.command";
 import {updateExerciceUseCase} from "@/src/exercice/features/update-exercice/update-exercice.usecase";
 import {Exercice, ExercicesSortedByMuscle} from "@/src/exercice/features/shared/exercice.model.type";
-import {getExercicesListData} from "@/src/exercice/features/list-exercices/list-exercices.selectors";
+import {getExercicesListData} from "@/src/exercice/features/list-exercices/list-exercices.state";
 import {
     getExerciceUpdateError, getExerciceUpdateStatus
-} from "@/src/exercice/features/update-exercice/update-exercice.selectors";
-import {getNotificationsList} from "@/src/notification/features/shared/notification.selectors";
+} from "@/src/exercice/features/update-exercice/update-exercice.state";
+import {getNotificationsList} from "@/src/notification/features/shared/notification.state";
 
 describe("As a user i want to update an exercice", () => {
     let testStore: AppStore;

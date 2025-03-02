@@ -1,6 +1,7 @@
 import {useCreateExerciceViewModel} from "@/src/exercice/ui/create-exercice/create-exercice.view-model";
 import {Button, Image, StyleSheet, Text, TextInput, TouchableOpacity, View,} from "react-native";
-import {CreateExerciceStatus} from "@/src/exercice/features/create-exercice/create-exercice.reducer";
+
+import {CreateExerciceStatus} from "@/src/exercice/features/create-exercice/create-exercice.state";
 
 export default function CreateExercice() {
     const {

@@ -1,8 +1,10 @@
 import {deleteExerciceUseCase} from "@/src/exercice/features/delete-exercice/delete-exercice.use-case";
 import {useRouter} from "expo-router";
 import {useDispatch, useSelector} from "react-redux";
-import {getDeleteExerciceStatus} from "@/src/exercice/features/delete-exercice/delete-exercice.selectors";
-import {DeleteExerciceStatus} from "@/src/exercice/features/delete-exercice/delete-exercice.reducer";
+
+import {
+    DeleteExerciceStatus, getDeleteExerciceStatus
+} from "@/src/exercice/features/delete-exercice/delete-exercice.state";
 
 export const useExerciceActionsViewModel = (): {
     handleEdit: (exerciceId: string) => void;

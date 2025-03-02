@@ -5,12 +5,11 @@ import {getExerciceByIdUseCase} from "@/src/exercice/features/get-exercice-by-id
 import {ExerciceSuccessRepositoryFake} from "@/src/exercice/features/shared/test/exercice-success.repository.fake";
 import {ExerciceErrorRepositoryFake} from "@/src/exercice/features/shared/test/exercice-error.repository.fake";
 import {Exercice, ExercicesSortedByMuscle,} from "@/src/exercice/features/shared/exercice.model.type";
-import {NotificationType} from "@/src/notification/features/shared/notification-type.enum";
-import {getExercicesListData} from "@/src/exercice/features/list-exercices/list-exercices.selectors";
 import {
     getExerciceByIdData, getExerciceByIdError, getExerciceByIdStatus
-} from "@/src/exercice/features/get-exercice-by-id/get-exercice-by-id.selectors";
-import {getNotificationsList} from "@/src/notification/features/shared/notification.selectors";
+} from "@/src/exercice/features/get-exercice-by-id/get-exercice-by-id.state";
+import {getExercicesListData} from "@/src/exercice/features/list-exercices/list-exercices.state";
+import {getNotificationsList, NotificationType} from "@/src/notification/features/shared/notification.state";
 
 let testStore: AppStore;
 

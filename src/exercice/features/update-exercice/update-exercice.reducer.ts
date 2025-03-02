@@ -2,20 +2,9 @@ import {
     exerciceUpdated, exerciceUpdateFailed, exerciceUpdateStarted,
 } from "@/src/exercice/features/update-exercice/update-exercice.events";
 import {createReducer} from "@reduxjs/toolkit";
-
-export enum UpdatExerciceStatus {
-    IDLE = "idle", LOADING = "loading", SUCCESS = "success", ERROR = "error",
-}
-
-type UpdateExerciceState = {
-    status: UpdatExerciceStatus;
-    error: string | null;
-};
-
-const updateExerciceInitialState: UpdateExerciceState = {
-    status: UpdatExerciceStatus.IDLE,
-    error: null,
-};
+import {
+    updateExerciceInitialState, UpdatExerciceStatus
+} from "@/src/exercice/features/update-exercice/update-exercice.state";
 
 const updateExerciceReducer = createReducer(updateExerciceInitialState, (builder) => {
     builder

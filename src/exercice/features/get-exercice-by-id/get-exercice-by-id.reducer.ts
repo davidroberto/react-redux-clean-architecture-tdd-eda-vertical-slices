@@ -2,23 +2,9 @@ import {createReducer} from "@reduxjs/toolkit";
 import {
     exerciceLoaded, exerciceLoadingFailed, exerciceLoadingStarted,
 } from "@/src/exercice/features/get-exercice-by-id/get-exercice-by-id.events";
-import {Exercice} from "@/src/exercice/features/shared/exercice.model.type";
-
-export enum GetExerciceByIdStatus {
-    IDLE = "idle", LOADING = "loading", SUCCESS = "success", ERROR = "error",
-}
-
-type GetExerciceByIdState = {
-    data: Exercice | null;
-    status: GetExerciceByIdStatus;
-    error: string | null;
-};
-
-const getExerciceByIdInitialState: GetExerciceByIdState = {
-    data: null,
-    status: GetExerciceByIdStatus.IDLE,
-    error: null
-};
+import {
+    getExerciceByIdInitialState, GetExerciceByIdStatus
+} from "@/src/exercice/features/get-exercice-by-id/get-exercice-by-id.state";
 
 const getExerciceByIdReducer = createReducer(getExerciceByIdInitialState, (builder) => {
     builder

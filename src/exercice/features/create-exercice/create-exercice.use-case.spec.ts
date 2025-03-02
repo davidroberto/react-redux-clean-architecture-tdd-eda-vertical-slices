@@ -5,12 +5,11 @@ import {ExerciceErrorRepositoryFake} from "@/src/exercice/features/shared/test/e
 import {createTestStore} from "@/src/shared/application/test/test.store";
 import {createExerciceUseCase} from "@/src/exercice/features/create-exercice/create-exercice.use-case";
 import {CreateExerciceCommand} from "@/src/exercice/features/create-exercice/create-exercice.command";
-import {NotificationType} from "@/src/notification/features/shared/notification-type.enum";
-import {getExercicesListData} from "@/src/exercice/features/list-exercices/list-exercices.selectors";
 import {
     getExerciceCreateError, getExerciceCreateStatus
-} from "@/src/exercice/features/create-exercice/create-exercice.selectors";
-import {getNotificationsList} from "@/src/notification/features/shared/notification.selectors";
+} from "@/src/exercice/features/create-exercice/create-exercice.state";
+import {getExercicesListData} from "@/src/exercice/features/list-exercices/list-exercices.state";
+import {getNotificationsList, NotificationType} from "@/src/notification/features/shared/notification.state";
 
 describe("As a user i want to create an exercice", () => {
     let testStore: AppStore;

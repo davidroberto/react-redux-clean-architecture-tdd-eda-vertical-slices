@@ -3,8 +3,10 @@ import * as ImagePicker from "expo-image-picker";
 import {useRouter} from "expo-router";
 import {useDispatch, useSelector} from "react-redux";
 import {createExerciceUseCase} from "@/src/exercice/features/create-exercice/create-exercice.use-case";
-import {getExerciceCreateStatus} from "@/src/exercice/features/create-exercice/create-exercice.selectors";
-import {CreateExerciceStatus} from "@/src/exercice/features/create-exercice/create-exercice.reducer";
+
+import {
+    CreateExerciceStatus, getExerciceCreateStatus
+} from "@/src/exercice/features/create-exercice/create-exercice.state";
 
 export const useCreateExerciceViewModel = (): {
     title: string;

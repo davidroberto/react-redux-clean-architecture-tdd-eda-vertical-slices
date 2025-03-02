@@ -6,7 +6,7 @@ import {getExerciceByIdUseCase} from "@/src/exercice/features/get-exercice-by-id
 import {updateExerciceUseCase} from "@/src/exercice/features/update-exercice/update-exercice.usecase";
 import {
     getExerciceByIdData, getExerciceByIdStatus
-} from "@/src/exercice/features/get-exercice-by-id/get-exercice-by-id.selectors";
+} from "@/src/exercice/features/get-exercice-by-id/get-exercice-by-id.state";
 
 export const useUpdateExerciceViewModel = (): {
     title: string;

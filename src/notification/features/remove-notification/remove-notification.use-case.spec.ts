@@ -1,8 +1,7 @@
 import {AppStore} from "@/src/shared/application/root.store";
-import {NotificationType} from "@/src/notification/features/shared/notification-type.enum";
 import {notificationRemoveStarted} from "@/src/notification/features/remove-notification/remove-notification.events";
-import {Notification} from "@/src/notification/features/shared/notification.model";
 import {createTestStore} from "@/src/shared/application/test/test.store";
+import {Notification, NotificationType} from "@/src/notification/features/shared/notification.state";
 
 describe("As a user I want to remove a notification", () => {
     let testStore: AppStore;

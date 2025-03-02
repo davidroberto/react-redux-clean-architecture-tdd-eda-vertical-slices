@@ -1,8 +1,9 @@
-import {NotificationType} from "@/src/notification/features/shared/notification-type.enum";
+import {NotificationType} from "@/src/notification/features/shared/notification.state";
 
-export const generateNotification = (
-    message: string,
-    type: NotificationType,
-) => {
-    return {id: crypto.randomUUID(), message, type};
+export const generateNotification = (message: string, type: NotificationType,) => {
+    return {
+        id: crypto.randomUUID(),
+        message,
+        type
+    };
 };
