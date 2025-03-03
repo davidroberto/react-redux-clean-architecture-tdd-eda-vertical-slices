@@ -6,6 +6,8 @@
 - Feel free to contribute or provide feedback if you have any ideas, suggestions, or believe something can be improved.
 - The React components and React Native pages are not the main focus of this project and have been kept simple. So you may still encounter some TODO items or TypeScript warnings in the UI layer. There is not test for react component.
 
+<br />
+
 ### My grief with react and "classic" react state management: 
 
 - Feeling like I'm hacking things together to manage my components' state
@@ -18,6 +20,7 @@
 - Having to reload the page to see state changes and replay scenarios
 - Needing a backend to test scenarios and polluting the database with every manual test
 
+<br />
 
 ### Clean architecture in frontend: 
 
@@ -45,6 +48,8 @@ Annnnd that’s it. We have a Clean Architecture approach in the frontend.
 But as the state was managed by React, it's still difficult to test the state changes and the transitions between states.
 That's when Redux comes in.
 
+<br />
+
 ### What about Redux?
 
 So to store data in our application (e.g., the logged-in user, a list of exercises, etc.), we need state. To share this state between components, we can use the Context API or a state management library such as Zustand, Recoil, or Redux. Redux has a reputation for having a lot of boilerplate and is sometimes considered overkill.
@@ -57,17 +62,20 @@ Because Redux is not just a state manager. In this app, we use Redux for four ma
 3) Dependency Injection: By using the extraArgument option, we can inject the repository (for data fetching, etc.) into the use case
 4) Middleware for Side Effects : Redux Thunk (or another middleware) handles side effects, such as API calls, from within the use case.
 
+
+![react-redux-clean-archi.png](./react-redux-clean-eda.png)
+
 I feel like Redux perfectly fills the missing holes with Clean Architecture with React. 
 The event driven architecture which is enabled by Redux allows us to manage the state in a predictable way. And to think about state and transition without React in mind. That way, we can focus on the business logic and the state transitions, and test them without needing to open the browser. We can also modelize the state transitions with a state machine diagram, which is a great way to visualize the application flow, and using TDD to develop the use cases and state changes.
 When done, we just need to plug in the React component. React is used only for what it was designed for: the UI
 
 
-![react-redux-clean-archi.png](./react-redux-clean-eda.png)
+
 
 ![redux-message-bus.png](redux-message-bus.png)
-(_from Yazan Alaboudi Redux talk: https://slides.com/yazanalaboudi/deck#/46_)
+(_image from Yazan Alaboudi Redux talk: https://slides.com/yazanalaboudi/deck#/46_)
 
-
+<br />
 
 ### My Dev methodology using TDD:
 - Definition of the scenario for the feature. Example:
@@ -152,11 +160,15 @@ end
 
 ```
 
+<br />
+
 ### ~~DDD~~:
 - No tactical DDD patterns
 - No true domain model
 - Business rules and invariant guarantees are handled by the backend (single source of truth)
 - For validations: simple validation services called within use cases
+
+<br />
 
 ### About vertical slices:
 
@@ -177,6 +189,7 @@ end
     - Using combineReducer if each reducer operates on a separate portion of the state
     - OR using a custom utility composeReducers to merge reducers without creating a new state key if reducers operate on the same state portion (e.g., creating/deleting notifications)
 
+<br />
 
 ### Please note: 
 
@@ -190,6 +203,7 @@ end
 - The state is not normalized (using Normalizer for exemple) and the ui state is not separated from the "entity" state in the store (but it can be if the relational / nested data become is too complex)
 - The selectors here are not created using createSelector (Reselect) because the data retrieved from the store is not derived or transformed
 
+<br />
 
 ### Execution flow:
 
@@ -245,7 +259,10 @@ sequenceDiagram
     }
   }
 }%%
+
 ```
+<br />
+
 
 ### Execution flow exemple (use case create exercice): 
 
@@ -316,11 +333,12 @@ sequenceDiagram
 }%%
 ```
 
-
+<br />
 
 Useful ressources: 
 
 - [Codeminer42 Blog "Scalable Frontend series"](https://blog.codeminer42.com/scalable-frontend-1-architecture-9b80a16b8ec7/)
+- [Michel Weststrate's "UI as an afterthought" article](https://michel.codes/blogs/ui-as-an-afterthought)
 - [Dan Abramov's "Hot Reloading with Time Travel" talk](https://www.youtube.com/watch?v=xsSnOQynTHs)
 - [Dan Abramov's "The Redux Journey " talk](https://www.youtube.com/watch?v=uvAXVMwHJXU)
 - [Michaël Azerhad's Linkedin posts about Redux](https://www.linkedin.com/in/michael-azerhad/)
