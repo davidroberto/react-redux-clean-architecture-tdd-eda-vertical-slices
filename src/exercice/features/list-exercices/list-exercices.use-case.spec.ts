@@ -116,7 +116,7 @@ describe("As a user i want to get all exercices", () => {
 
             test("Then it should set an error message", async () => {
                 const getErrorNotification = getNotificationsList(testStore.getState()).find(
-                    (notification) => notification.message === "Exercices récupération échouée",);
+                    (notification) => notification.message === "Exercices récupération échouée");
                 expect(getErrorNotification).not.toBeUndefined();
                 expect(getErrorNotification?.type).toBe(NotificationType.ERROR);
             });

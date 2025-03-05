@@ -60,12 +60,14 @@ Because Redux is not just a state manager. In this app, we use Redux for four ma
 1) State Management : To store the global application state.
 2) (Kind of) Pub/Sub System : We dispatch actions from our use cases, and reducers listen for these actions to update the state accordingly. 
 3) Dependency Injection: By using the extraArgument option, we can inject the repository (for data fetching, etc.) into the use case
-4) Middleware for Side Effects : Redux Thunk (or another middleware) handles side effects, such as API calls, from within the use case.
+4) Middleware for Side Effects : Redux Thunk (or another middleware) handles side effects, such as API calls: that's our use case.
 
 
 ![react-redux-clean-archi.png](./react-redux-clean-eda.png)
 
-I feel like Redux perfectly fills the missing holes with Clean Architecture with React. 
+**It's important to notice that Redux lives in our domain / application layers. It's not considered as an infrastructure tool, but as a core part of our application.**
+
+I feel like Redux perfectly fills the missing holes with Clean Architecture with React.
 The event driven architecture which is enabled by Redux allows us to manage the state in a predictable way. And to think about state and transition without React in mind. That way, we can focus on the business logic and the state transitions, and test them without needing to open the browser. We can also modelize the state transitions with a state machine diagram, which is a great way to visualize the application flow, and using TDD to develop the use cases and state changes.
 When done, we just need to plug in the React component. React is used only for what it was designed for: the UI
 

@@ -11,8 +11,10 @@ export const NotificationsViewModel = () => {
     const handleCloseNotification = (id: string) => {
         dispatch(notificationRemoveStarted(id));
     };
+
     return {
         notifications,
         handleCloseNotification
     };
 };
+
