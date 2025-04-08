@@ -115,9 +115,9 @@ That's when Redux comes in.
 
 ### What about Redux? <a id="redux"></a>
 
-So to store data in our application (e.g., the logged-in user, a list of exercises, etc.), we need state. To share this state between components, we can use the Context API or a state management library such as Zustand, Recoil, or Redux. Redux has a reputation for having a lot of boilerplate and is sometimes considered overkill.
+To store data in our application (e.g., the logged-in user, a list of exercises, etc.), we need state. To share this state between components, we can use the Context API or a state management library such as Zustand, Recoil, or Redux. Redux has a reputation for having a lot of boilerplate and is sometimes considered overkill.
 
-Why choose Redux?
+So why choose Redux?
 Because Redux is not just a state manager. In this app, we use Redux and RTK for four main purposes:
 
 1) State Management: to store the global application state.
