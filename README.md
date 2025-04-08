@@ -126,8 +126,8 @@ Because Redux is not just a state manager. In this app, we use Redux and RTK for
 ![redux-message-bus.png](doc/redux-message-bus.png)
 [_image from Yazan Alaboudi Redux talk_](https://slides.com/yazanalaboudi/deck#/46)
 
-3) Dependency Injection: By using the extraArgument option, we can inject the repository (for data fetching, etc.) or any other infrastucture dependency into the use case ([here](https://github.com/davidroberto/react-redux-clean-architecture-tdd-eda-vertical-slices/blob/main/src/shared/application/root.store.ts) and [here](https://github.com/davidroberto/react-redux-clean-architecture-tdd-eda-vertical-slices/blob/main/src/exercice/features/create-exercice/create-exercice.use-case.spec.ts)).
-4) Middleware for Side Effects: Redux Thunk handles side effects such as API calls. Therefore, our use cases are implemented as Redux thunks, providing more granular control over how Redux actions are dispatched, related to the side effects ([here](https://github.com/davidroberto/react-redux-clean-architecture-tdd-eda-vertical-slices/blob/main/src/exercice/features/create-exercice/create-exercice.use-case.ts)).
+3) Dependency Injection: By using the extraArgument option in the Redux store creation (using RTK configure store, [here](https://github.com/davidroberto/react-redux-clean-architecture-tdd-eda-vertical-slices/blob/main/src/shared/application/root.store.ts)), we can inject the repository (for data fetching, etc.) or any other infrastucture dependency into the use case ([here](https://github.com/davidroberto/react-redux-clean-architecture-tdd-eda-vertical-slices/blob/main/src/exercice/features/create-exercice/create-exercice.use-case.spec.ts)).
+4) Middleware for Side Effects: Redux Thunk handles side effects such as API calls. Therefore, our use cases are implemented as Redux thunks, providing more granular control over how Redux actions (events) are dispatched related to the side effects ([here](https://github.com/davidroberto/react-redux-clean-architecture-tdd-eda-vertical-slices/blob/main/src/exercice/features/create-exercice/create-exercice.use-case.ts)).
 
 
 ![react-redux-clean-archi.png](doc/react-redux-clean-eda.png)
