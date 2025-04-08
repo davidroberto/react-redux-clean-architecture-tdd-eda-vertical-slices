@@ -12,8 +12,8 @@ This architecture have been showcased in the "[CTO In Shape](https://www.youtube
 4. [Installation](#install)
 5. [Clean architecture in front-end](#clean-archi)
 6. [Redux](#redux)
-7. [Execution flow](#execution-flow)
-8. [Dev methodology with TDD](#methodo)
+7. [Dev methodology with TDD](#methodo)
+8. [Execution flow](#execution-flow)
 9. [DDD ?](#ddd)
 10. [Vertical slices](#vertical-slices)
 11. [Useful Ressources](#ressources)
@@ -149,6 +149,88 @@ Please note that:
 
 
 <br />
+
+### My Dev methodology using TDD: <a id="methodo"></a>
+1. Definition of the user story and scenario for the feature. Example:
+- As a user, I want to create an exercise
+- Given no exercise is already created
+- When the exercise creation starts
+- Then the loading should be true
+2.  Creation of a state machine diagram to visualize state transitions (directly in webstorm using [Mermaid](https://mermaid-js.github.io/mermaid/#/)):
+
+```mermaid
+---
+title: Create Exercice State
+---
+
+flowchart TD
+  A[
+        Idle
+
+Status: idle
+Error: null
+
+Notifications: n
+
+List Exercices Data: n
+]
+
+B[
+Loading
+
+Status: loading
+Error: null
+
+Notifications: n
+
+List Exercices Data: n
+]
+
+C[
+Error
+
+Status: error
+Error: error message
+
+Notification: n + 1 error
+
+List Exercices Data: n
+]
+
+D[
+Success
+
+Status: success
+Error: null
+
+Notification: n + 1 success
+]
+
+
+E[
+List exercices Success
+
+...
+Data: n + created exercice
+]
+
+subgraph Create Exercice
+A -->|Exercice creation Started|B
+B -->|Exercice creation failed|C
+B -->|Exercice Created|D
+end
+
+subgraph List exercices
+D -->|...|E
+end
+
+```
+3. Writing the first acceptance test based on the scenario ([here](https://github.com/davidroberto/react-redux-clean-architecture-tdd-eda-vertical-slices/blob/main/src/exercice/features/create-exercice/create-exercice.use-case.spec.ts)): red
+4. Implementation of the use case using baby steps (green)
+5. Refactoring the code (refactor)
+
+The unit tests are socials with the use case as the starting point and assert against the current state with selectors.
+
 
 
 ### Execution flow: <a id="execution-flow"></a>
@@ -291,86 +373,6 @@ sequenceDiagram
 }%%
 ```
 
-### My Dev methodology using TDD: <a id="methodo"></a>
-1. Definition of the user story and scenario for the feature. Example:
-  - As a user, I want to create an exercise
-  - Given no exercise is already created
-  - When the exercise creation starts
-  - Then the loading should be true
-2.  Creation of a state machine diagram to visualize state transitions (directly in webstorm using [Mermaid](https://mermaid-js.github.io/mermaid/#/)):
-
-```mermaid
----
-title: Create Exercice State
----
-
-flowchart TD
-  A[
-        Idle
-
-Status: idle
-Error: null
-
-Notifications: n
-
-List Exercices Data: n
-]
-
-B[
-Loading
-
-Status: loading
-Error: null
-
-Notifications: n
-
-List Exercices Data: n
-]
-
-C[
-Error
-
-Status: error
-Error: error message
-
-Notification: n + 1 error
-
-List Exercices Data: n
-]
-
-D[
-Success
-
-Status: success
-Error: null
-
-Notification: n + 1 success
-]
-
-
-E[
-List exercices Success
-
-...
-Data: n + created exercice
-]
-
-subgraph Create Exercice
-A -->|Exercice creation Started|B
-B -->|Exercice creation failed|C
-B -->|Exercice Created|D
-end
-
-subgraph List exercices
-D -->|...|E
-end
-
-```
-3. Writing the first acceptance test based on the scenario ([here](https://github.com/davidroberto/react-redux-clean-architecture-tdd-eda-vertical-slices/blob/main/src/exercice/features/create-exercice/create-exercice.use-case.spec.ts)): red
-4. Implementation of the use case using baby steps (green)
-5. Refactoring the code (refactor)
-
-The unit tests are socials with the use case as the starting point and assert against the current state with selectors.
 
 
 
