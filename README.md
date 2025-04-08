@@ -85,7 +85,7 @@ The main idea here is to separate the React component from the business logic an
 
 Imagine this user story: “**As a user, I want to create an exercise**.” 
 
-The business logic is to create an exercise. The data access involves fetching exercises. The React component is responsible for displaying exercises and allowing the user to create a new exercise.
+The business logic is to create an exercise. The data access involves sending a fetch request to create an exercises. The React component is responsible for displaying exercises and allowing the user to create a new exercise.
 
 
 So we can already separate the code into three parts:
