@@ -121,7 +121,7 @@ So why choose Redux?
 Because Redux is not just a state manager. In this app, we use Redux and RTK for four main purposes:
 
 1) State Management: to store the global application state.
-2) (Kind of) Pub/Sub System / Synchronous event bus: In Redux we dispatch actions. This actions are "listened" by reducers in order to update the state accordingly. This part of Redux can be seen as a synchronous event bus. So in this repository, the actions dispatched by the use case are named "event" here, because they feel more like events (in a event driven architecture style). 
+2) (Kind of) Pub/Sub System / Synchronous event bus: In Redux we dispatch actions. This actions are "listened" by reducers in order to update the state accordingly. This part of Redux can be seen as a synchronous event bus. So in this repository, the actions dispatched by the use case are named "event" ([here](https://github.com/davidroberto/react-redux-clean-architecture-tdd-eda-vertical-slices/blob/main/src/exercice/features/create-exercice/create-exercice.events.ts)), because they feel more like it (in a event driven architecture style). 
 
 ![redux-message-bus.png](doc/redux-message-bus.png)
 [_image from Yazan Alaboudi Redux talk_](https://slides.com/yazanalaboudi/deck#/46)
