@@ -151,7 +151,7 @@ Please note that:
 <br />
 
 ### My Dev methodology using TDD: <a id="methodo"></a>
-1. Definition of the user story and scenario for the feature. Example:
+1. Definition of the user story and scenarios for the feature. Example:
 - As a user, I want to create an exercise
 - Given no exercise is already created
 - When the exercise creation starts
@@ -225,12 +225,12 @@ D -->|...|E
 end
 
 ```
-3. Writing the first acceptance test based on the scenario ([here](https://github.com/davidroberto/react-redux-clean-architecture-tdd-eda-vertical-slices/blob/main/src/exercice/features/create-exercice/create-exercice.use-case.spec.ts)): red
+3. Writing the first acceptance test based the scenario.  ([here](https://github.com/davidroberto/react-redux-clean-architecture-tdd-eda-vertical-slices/blob/main/src/exercice/features/create-exercice/create-exercice.use-case.spec.ts)): red
 4. Implementation of the use case using baby steps (green)
 5. Refactoring the code (refactor)
+6. Writing a second acceptance test 
 
-The unit tests are socials with the use case as the starting point and assert against the current state with selectors.
-
+The unit tests here are usually socials (and can serve as specifications) with the use case as the starting point and assert against the current state with selectors.
 
 
 ### Execution flow: <a id="execution-flow"></a>
