@@ -230,7 +230,7 @@ end
 5. Refactoring the code (refactor)
 6. Writing a second acceptance test 
 
-The unit tests here are usually socials (and can serve as specifications) with the use case as the starting point and assert against the current state with selectors.
+The unit tests here are usually socials (and can serve as specifications) in order to avoid fragile tests because of "behavior sensitivity" (test should change if the scenario change, not if the inner code change).The use case as the starting point and it asserts against the current state with selectors.
 
 
 ### Execution flow: <a id="execution-flow"></a>
