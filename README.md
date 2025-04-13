@@ -1,7 +1,7 @@
 
 The purpose [of this repository](https://github.com/davidroberto/react-redux-clean-architecture-tdd-eda-vertical-slices) is to build a front end application with react, using the Clean Architecture, Event Driven Architecture, TDD and vertical slices principles.
 
-This architecture have been showcased in the "[CTO In Shape](https://www.youtube.com/channel/UCfRCkaIb9gEYVeFOsmYsylQ)" podcast during a pair programming session with [Mathieu Kahlaoui](https://www.linkedin.com/in/mathieu-kahlaoui/)! You can watch the podcast here: [CTO In Shape - Clean Architecture with Redux](https://www.youtube.com/watch?v=2X0g1a3qk4E).
+This architecture have been showcased in the "[CTO InShape](https://www.youtube.com/channel/UCfRCkaIb9gEYVeFOsmYsylQ)" podcast during a pair programming session with [Mathieu Kahlaoui](https://www.linkedin.com/in/mathieu-kahlaoui/)! You can watch the podcast here: [CTO In Shape - Clean Architecture with Redux](https://www.youtube.com/watch?v=xA_ZL926tgY).
 
 
 ## Table of Contents
