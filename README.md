@@ -24,7 +24,7 @@ This architecture have been showcased in the "[CTO In Shape](https://www.youtube
 
 This project is exploratory and aims to experiment with different ways to structure a front end application and use of TDD. It's my way of doing it and it can surely be better, so feel free to contribute, provide feedback or start PR if you have any ideas, suggestions, or believe something can be improved!
 
-The React components and React Native pages **are not** the main focus of this project and have been kept simple. So you may still encounter some TODO items or TypeScript warnings / errors (even some "any", oops) in the UI layer. Also there is not test for react component.
+The React components and React Native screens **are not** the main focus of this project and have been kept simple. So you may still encounter some TODO items or TypeScript warnings / errors (even some "any", oops) in the UI layer. Also there is not test for react component.
 
 <br />
 
